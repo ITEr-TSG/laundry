@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!-- spring的配置 -->
+	<!-- 数据源 -->
+	<!-- 排除controller注解的类 -->
+	<context:component-scan base-package="com.hp">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	<!-- 引入dbConfig.properties文件 -->
+	<context:property-placeholder location="classpath:dbConfig.properties" system-properties-mode="FALLBACK"/>
+	
+	<bean id="druidDataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="url" value="${jdbcUrl}"></property>
+		<property name="driverClassName" value="${driverClass}"></property>
+		<property name="username" value="${user}"></property>
+		<property name="password" value="${password}"></property>
+		<property name="maxActive" value="${maxActive}"></property>
+		<property name="initialSize" value="${initialSize}"></property>
+		<property name="maxWait" value="${maxWait}"></property>
+		<property name="minIdle" value="${minIdle}"></property>
+		<property name="filters" value="${filters}"></property>
+	</bean>
+	
+	<!-- 和mybatis plus的整合 -->
+	<bean id="SqlSessionFactory" class="com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean">
+		<!-- 配置mybatis的全局配置属性 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+		<!-- 配置数据源 -->
+		<property name="dataSource" ref="druidDataSource"></property>
+		
+		<!-- 配置mybatis的mapper文件 -->
+		<property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+		<!-- 别名 -->
+		<property name="typeAliasesPackage" value="com.hp.*.beans"/>
+		<property name="plugins">
+            <array>
+            	<!-- 生成sql语句 -->
+            	<bean id="performanceInterceptor" class="com.baomidou.mybatisplus.plugins.PerformanceInterceptor"/> 
+                <!-- 分页插件配置 -->
+                <bean id="paginationInterceptor" class="com.baomidou.mybatisplus.plugins.PaginationInterceptor"></bean>
+            </array>
+        </property>
+		<!-- 全局配置注入 -->
+	    <property name="globalConfig" ref="globalConfiguration" />
+	</bean>
+	<!-- MP的全局配置 -->
+	<bean id="globalConfiguration" class="com.baomidou.mybatisplus.entity.GlobalConfiguration">
+	    <!--
+			AUTO->`0`("数据库ID自增")
+		 	INPUT->`1`(用户输入ID")
+			ID_WORKER->`2`("全局唯一ID")
+			UUID->`3`("全局唯一ID")
+		-->
+	    <property name="idType" value="0" />
+		
+		<!-- 全局表前缀配置 -->
+		<property name="tablePrefix" value="tb_"></property>
+		
+	    <!-- 全局表为下划线命名设置 true -->
+	    <property name="dbColumnUnderline" value="true" /> 
+	    
+	    <!-- 逻辑删除 -->
+	    <property name="sqlInjector" ref="logicSqlInjector" />
+	    <property name="logicDeleteValue" value="-1" />
+    	<property name="logicNotDeleteValue" value="1" />
+	    <!--公共字段自动填充  -->
+	    <property name="metaObjectHandler" ref="commonMetaObjectHandler"/>
+	</bean>
+	<bean id="logicSqlInjector" class="com.baomidou.mybatisplus.mapper.LogicSqlInjector" />
+	<bean id="commonMetaObjectHandler" class="com.hp.utils.CommonMetaObjectHandler" />
+	
+	
+	<!-- 配置容器将mybatis的接口实现加入到ioc容器中 -->
+	<bean  class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 扫描所有的dao接口 -->
+		<property name="basePackage" value="com.hp.*.mapper"></property>	
+	</bean>
+	
+	<!-- 事务控制 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!-- 控制数据源 -->
+		<property name="dataSource" ref="druidDataSource"></property>
+	</bean>
+	
+	<!-- 开启基于注解的事务控制，使用xml -->	
+	<aop:config>
+		<!-- 切入表达式 -->
+		<aop:pointcut expression="execution(* com.hp.*.service..*(..))" id="txPointcut"/>
+		<!-- 配置事务增强 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+	</aop:config>
+	
+	<!-- 配置事务增强，事务如何切入 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="append*" propagation="REQUIRED"/>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="modify*" propagation="REQUIRED"/>
+            <tx:method name="edit*" propagation="REQUIRED"/>
+            <tx:method name="insert*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="remove*" propagation="REQUIRED"/>
+            <tx:method name="repair" propagation="REQUIRED"/>
+
+            <tx:method name="get*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="find*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="load*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="search*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="datagrid*" propagation="REQUIRED" read-only="true"/>
+
+            <tx:method name="*" propagation="REQUIRED" read-only="true"/>
+        </tx:attributes>
+	
+	</tx:advice>
+</beans>
