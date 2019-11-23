@@ -28,7 +28,9 @@
 	
 	<!-- 将springMVC不能处理的请求交给tomcat  -->
 	<mvc:default-servlet-handler/>
-	
+
 	<!-- 支持mvc更高级的功能，JSR303校验，快捷ajax...映射动态请求-->
+	<!-- 响应的乱码 -->
 	<mvc:annotation-driven/>
+	
 </beans>

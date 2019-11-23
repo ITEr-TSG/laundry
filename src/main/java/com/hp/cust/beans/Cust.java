@@ -36,6 +36,10 @@ public class Cust extends Model<Cust> {
      */
     private String custName;
     /**
+     * 客户昵称
+     */
+    private String custNick;
+    /**
      * 客户密码
      */
     private String custPassword;
@@ -44,6 +48,11 @@ public class Cust extends Model<Cust> {
      */
     private String custEmail;
     /**
+     * 客户积分
+     * */
+    private Integer custIntegral;
+
+	/**
      * 注册时间
      */
     @TableField(fill = FieldFill.INSERT)
@@ -64,6 +73,13 @@ public class Cust extends Model<Cust> {
     @TableField(exist=false)
     private String formCode;
     
+    public Integer getCustIntegral() {
+		return custIntegral;
+	}
+
+	public void setCustIntegral(Integer custIntegral) {
+		this.custIntegral = custIntegral;
+	}
     
     public String getFormPwd1() {
 		return formPwd1;
@@ -142,12 +158,20 @@ public class Cust extends Model<Cust> {
         return this.custId;
     }
 
-	@Override
-	public String toString() {
-		return "Cust [custId=" + custId + ", custName=" + custName + ", custPassword=" + custPassword + ", custEmail="
-				+ custEmail + ", createTime=" + createTime + ", isDel=" + isDel + ", formPwd1=" + formPwd1
-				+ ", formPwd2=" + formPwd2 + ", formCode=" + formCode + "]";
+	public String getCustNick() {
+		return custNick;
 	}
 
+	public void setCustNick(String custNick) {
+		this.custNick = custNick;
+	}
+
+	@Override
+	public String toString() {
+		return "Cust [custId=" + custId + ", custName=" + custName + ", custNick=" + custNick + ", custPassword="
+				+ custPassword + ", custEmail=" + custEmail + ", custIntegral=" + custIntegral + ", createTime="
+				+ createTime + ", isDel=" + isDel + ", formPwd1=" + formPwd1 + ", formPwd2=" + formPwd2 + ", formCode="
+				+ formCode + "]";
+	}
     
 }

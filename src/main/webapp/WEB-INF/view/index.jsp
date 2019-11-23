@@ -2,25 +2,25 @@
 <!DOCTYPE html>
 <html>
 <%
-	pageContext.setAttribute("APP_PATH", request.getContextPath());
+	pageContext.setAttribute("PATH", request.getContextPath());
   %>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>项遇您后台主页</title>
+    <title>匠心衣橱后台</title>
     <!-- Styles -->
-    <link href="${APP_PATH}/static/assets/fontAwesome/css/fontawesome-all.min.css" rel="stylesheet">
-    <link href="${APP_PATH}/static/assets/css/lib/themify-icons.css" rel="stylesheet">
-    <link href="${APP_PATH}/static/assets/css/lib/mmc-chat.css" rel="stylesheet" />
-    <link href="${APP_PATH}/static/assets/css/lib/sidebar.css" rel="stylesheet">
-    <link href="${APP_PATH}/static/assets/css/lib/bootstrap.min.css" rel="stylesheet">
-    <link href="${APP_PATH}/static/assets/css/lib/nixon.css" rel="stylesheet">
-    <link href="${APP_PATH}/static/assets/lib/lobipanel/css/lobipanel.min.css" rel="stylesheet">
-    <link href="${APP_PATH}/static/assets/css/style.css" rel="stylesheet">
-    <link href="${APP_PATH}/static/layui/css/layui.css" rel="stylesheet">
-    <script src="${APP_PATH}/static/vue/vue.min.js"></script>
-    <script src="${APP_PATH}/static/vue/vue-resource.min.js"></script>
+    <link href="${PATH}/static/assets/fontAwesome/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="${PATH}/static/assets/css/lib/themify-icons.css" rel="stylesheet">
+    <link href="${PATH}/static/assets/css/lib/mmc-chat.css" rel="stylesheet" />
+    <link href="${PATH}/static/assets/css/lib/sidebar.css" rel="stylesheet">
+    <link href="${PATH}/static/assets/css/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="${PATH}/static/assets/css/lib/nixon.css" rel="stylesheet">
+    <link href="${PATH}/static/assets/lib/lobipanel/css/lobipanel.min.css" rel="stylesheet">
+    <link href="${PATH}/static/assets/css/style.css" rel="stylesheet">
+    <link href="${PATH}/static/layui/css/layui.css" rel="stylesheet">
+    <script src="${PATH}/static/vue/vue.min.js"></script>
+    <script src="${PATH}/static/vue/vue-resource.min.js"></script>
 </head>
 
 <body>
@@ -190,17 +190,17 @@
 		</div>
 </div>
 
-<script src="${APP_PATH}/static/assets/js/lib/jquery.min.js"></script>
+<script src="${PATH}/static/assets/js/lib/jquery.min.js"></script>
 <!-- jquery vendor -->
-<script src="${APP_PATH}/static/assets/js/lib/jquery.nanoscroller.min.js"></script>
+<script src="${PATH}/static/assets/js/lib/jquery.nanoscroller.min.js"></script>
 <!-- nano scroller -->
-<script src="${APP_PATH}/static/assets/js/lib/sidebar.js"></script>
+<script src="${PATH}/static/assets/js/lib/sidebar.js"></script>
 <!-- sidebar -->
-<script src="${APP_PATH}/static/assets/js/lib/bootstrap.min.js"></script>
+<script src="${PATH}/static/assets/js/lib/bootstrap.min.js"></script>
 <!-- bootstrap -->
-<script src="${APP_PATH}/static/assets/js/lib/mmc-common.js"></script>
-<script src="${APP_PATH}/static/assets/js/scripts.js"></script>
-<script src="${APP_PATH}/static/layui/layui.all.js"></script>
+<script src="${PATH}/static/assets/js/lib/mmc-common.js"></script>
+<script src="${PATH}/static/assets/js/scripts.js"></script>
+<script src="${PATH}/static/layui/layui.all.js"></script>
 
 <!-- scripit init-->
 <script>

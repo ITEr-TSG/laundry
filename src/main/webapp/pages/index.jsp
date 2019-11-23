@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML>
 <html lang="zxx">
 <%
@@ -39,7 +40,7 @@
 	<header>
 		<div class="container">
 			<nav class="navbar navbar-expand-lg navbar-light">
-				<a class="navbar-brand" href="index.html">
+				<a class="navbar-brand" href="${PATH}/pages/index.jsp">
 					<i class="fab fa-empire"></i>
 				</a>
 				<button class="navbar-toggler ml-md-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -50,7 +51,7 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mx-auto text-center">
 						<li class="nav-item active  mr-3">
-							<a class="nav-link" href="index.html">主页
+							<a class="nav-link" href="${PATH}/pages/index.jsp">主页
 								<span class="sr-only">(current)</span>
 							</a>
 						</li>
@@ -75,14 +76,46 @@
 							<a class="nav-link scroll" href="#contact">联系我们</a>
 						</li>
 					</ul>
-					<a href="${PATH}/pages/login.jsp" class="btn btn-info btn-lg-block w3ls-btn px-4 text-uppercase font-weight-bold"
-					    aria-pressed="false">
-						登录
-					</a>&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="${PATH}/pages/admin-login.jsp" class="btn btn-info btn-lg-block w3ls-btn px-4 text-uppercase font-weight-bold"
-					    aria-pressed="false">
-						后台登录
-					</a>
+					<c:choose>
+						<c:when test="${sessionScope.nick == null}">
+							<a href="${PATH}/pages/login.jsp"
+									class="btn btn-info btn-lg-block w3ls-btn px-4 text-uppercase font-weight-bold"
+									aria-pressed="false"> 登录 </a>&nbsp;&nbsp;&nbsp;&nbsp;
+								<a href="${PATH}/pages/admin-login.jsp"
+									class="btn btn-info btn-lg-block w3ls-btn px-4 text-uppercase font-weight-bold"
+									aria-pressed="false"> 后台登录 </a>
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${sessionScope.flag == 1}">
+									<li class="nav-item dropdown mr-3">
+										<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+										    aria-expanded="false">
+											${sessionScope.nick}
+										</a>
+										<div class="dropdown-menu">
+											<a class="dropdown-item" href="${PATH}/cust/getCustInfo/${sessionScope.id}/${sessionScope.name}">个人中心</a>
+											<a class="dropdown-item" href="${PATH}/cust/loginOut">退出登录</a>
+										</div>
+								  	</li>
+								</c:when>
+								<c:when test="${sessionScope.flag == 2}">
+									<li class="nav-item dropdown mr-3">
+										<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+										    aria-expanded="false">
+											技师专栏
+										</a>
+										<div class="dropdown-menu">
+											<a class="dropdown-item" href="${PATH}/pages/">个人中心</a>
+											<a class="dropdown-item" href="${PATH}/cust/loginOut">退出登录</a>
+										</div>
+								  	</li>	
+								</c:when>
+							</c:choose>
+						</c:otherwise>
+				</c:choose>
+					
+					
 
 				</div>
 			</nav>
@@ -782,7 +815,6 @@
 		jQuery(document).ready(function ($) {
 			$(".scroll ").click(function (event) {
 				event.preventDefault();
-
 				$('html,body').animate({
 					scrollTop: $(this.hash).offset().top
 				}, 1000);

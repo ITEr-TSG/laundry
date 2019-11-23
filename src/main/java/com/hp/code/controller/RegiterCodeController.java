@@ -54,7 +54,7 @@ public class RegiterCodeController {
 				return Msg.fail().add("msg", "发送失败！");
 			}
 		}else {
-			return Msg.fail().add("msg","获取失败！");
+			return Msg.fail().add("msg","验证码获取失败！");
 		}
 	}
 }

@@ -6,11 +6,11 @@ import org.apache.commons.mail.HtmlEmail;
 public class EmailUntils {
 
 	private static final String hostName = "smtp.qq.com";
-    private static final String userInfo = "frvzijzfhowxbagd"; //服务器验证码 -- 非发件人邮箱密码
+    private static final String userInfo = "bsvrrobxysvjgbbg"; //服务器验证码 -- 非发件人邮箱密码
     
     private static final String chartset = "UTF-8";
     //发件人
-    private static final String senderEmail = "1528474876@qq.com";
+    private static final String senderEmail = "1142369743@qq.com";
     //发件人昵称
     private static final String senderNick = "匠心衣橱";
     //主题
@@ -36,8 +36,16 @@ public class EmailUntils {
                email.addTo(receive);
             }
             //发送
-            email.send();
-            return true;
+            try {
+				String send = email.send();
+				System.out.println(send);
+				return true;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+            
         } catch (EmailException e) {
             e.printStackTrace();
             return false;

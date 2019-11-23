@@ -2,8 +2,8 @@
 <div class="header">
         <div class="pull-left">
             <div class="logo">
-                <a href="${APP_PATH}/admin/toIndex">
-                    <img id="logoImg" src="${APP_PATH}/static/assets/logo/logo.png" data-logo_big="${APP_PATH}/static/assets/logo/logo.png" data-logo_small="${APP_PATH}/static/assets/logo/logoSmall.png" alt="Nixon" />
+                <a href="${PATH}/admin/toIndex">
+                    <img id="logoImg" src="${PATH}/static/assets/logo/logo.png" data-logo_big="${PATH}/static/assets/logo/logo.png" data-logo_small="${PATH}/static/assets/logo/logoSmall.png" alt="Nixon" />
                 </a>
             </div>
             <div class="hamburger sidebar-toggle">
@@ -27,7 +27,7 @@
                     <div class="drop-down dropdown-profile">
                         <div class="dropdown-content-body">
                             <ul>
-                                <li><a href="${APP_PATH}/admin/editAdminInfo"><i class="ti-user"></i> <span>编辑资料</span></a></li>
+                                <li><a href="${PATH}/admin/editAdminInfo"><i class="ti-user"></i> <span>编辑资料</span></a></li>
                                 <!-- <li><a href="#"><i class="ti-wallet"></i> <span>My Balance</span></a></li>
                                 <li><a href="#"><i class="ti-write"></i> <span>My Task</span></a></li>
                                 <li><a href="#"><i class="ti-calendar"></i> <span>My Calender</span></a></li>
@@ -36,7 +36,7 @@
                                 <li><a href="#"><i class="ti-help-alt"></i> <span>Help</span></a></li>
                                 <li><a href="#"><i class="ti-lock"></i> <span>Lock Screen</span></a></li> -->
                                 
-                                <li><a href="${APP_PATH}/admin/loginOut"><i class="ti-power-off"></i> <span>退出登录</span></a></li>
+                                <li><a href="${PATH}/admin/loginOut"><i class="ti-power-off"></i> <span>退出登录</span></a></li>
                             </ul>
                         </div>
                     </div>

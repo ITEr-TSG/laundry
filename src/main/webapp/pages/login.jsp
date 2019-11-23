@@ -38,7 +38,7 @@ h1 {
 <body>
 	<div class="container-fluid" style="background-color: gray;">
 		<nav class="navbar navbar-expand-lg navbar-light">
-			<a class="navbar-brand" href="index.html"> <i
+			<a class="navbar-brand" href="${PATH}/pages/index.jsp"> <i
 				class="fab fa-empire"></i>
 			</a>
 			<button class="navbar-toggler ml-md-auto" type="button"
@@ -53,7 +53,7 @@ h1 {
 				<a href="${PATH}/pages/cust-regiter.jsp"
 					class="btn btn-info btn-lg-block w3ls-btn px-4 text-uppercase font-weight-bold"
 					aria-pressed="false"> 注册客户 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a
-					href="${PATH}/pages/login.jsp"
+					href="${PATH}/pages/technician-regiter.jsp"
 					class="btn btn-info btn-lg-block w3ls-btn px-4 text-uppercase font-weight-bold"
 					aria-pressed="false"> 注册技师 </a>
 
@@ -65,18 +65,19 @@ h1 {
 			<div class="layui-col-md12">
 				<div class="layui-col-md4 layui-col-md-offset4">
 					<h1 align="center">客户登录</h1>
-					<form class="layui-form" action="">
+					<h4 align="center" style="color: red"> ${sessionScope.error}</h4><br>
+					<form class="layui-form" action="${PATH}/cust/loginInto" method="post">
 						<div class="layui-form-item">
 							<label class="layui-form-label">用户名</label>
 							<div class="layui-input-block">
-								<input type="text" name="custName" required lay-verify="required"
-									placeholder="请输入用户名" autocomplete="off" class="layui-input">
+								<input type="text" name="formCode" required lay-verify="required"
+									placeholder="请输入用户或邮箱" autocomplete="off" class="layui-input">
 							</div>
 						</div>
 						<div class="layui-form-item">
 							<label class="layui-form-label">密码</label>
 							<div class="layui-input-block">
-								<input type="password" name="title" required lay-verify="required"
+								<input type="password" name="custPassword" required lay-verify="required"
 									placeholder="请输入标题密码" autocomplete="off" class="layui-input">
 							</div>
 						</div>
@@ -89,7 +90,7 @@ h1 {
 
 						<div class="layui-form-item">
 							<div class="layui-input-block">
-								<button class="layui-btn" lay-submit lay-filter="formDemo">登录</button>
+								<button class="layui-btn" type="submit">登录</button>
 								<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 							</div>
 						</div>

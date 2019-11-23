@@ -7,7 +7,7 @@
 %>
 <head>
 <meta charset="UTF-8">
-<title>客户注册</title>
+<title>技师注册</title>
 <link href="${PATH}/pages/css/bootstrap.css" rel='stylesheet'
 	type='text/css' />
 <link rel="stylesheet" href="${PATH}/pages/css/swipebox.css">
@@ -33,18 +33,18 @@ form {
 h1 {
 	padding: 100px 0px 50px 0px
 }
-.layui-form-label{
+
+.layui-form-label {
 	width: 100px;
-
 }
-input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-    }
-    input[type="number"]{
-        -moz-appearance: textfield;
-    }
 
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+}
+
+input[type="number"] {
+	-moz-appearance: textfield;
+}
 </style>
 
 <body>
@@ -65,76 +65,89 @@ input::-webkit-outer-spin-button,
 				<a href="${PATH}/pages/login.jsp"
 					class="btn btn-info btn-lg-block w3ls-btn px-4 text-uppercase font-weight-bold"
 					aria-pressed="false"> 客户登录 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a
-					href="${PATH}/pages/technician-regiter.jsp"
+					href="${PATH}/pages/cust-regiter.jsp"
 					class="btn btn-info btn-lg-block w3ls-btn px-4 text-uppercase font-weight-bold"
-					aria-pressed="false"> 注册技师 </a>
+					aria-pressed="false"> 注册客户 </a>
 
 			</div>
 		</nav>
 	</div>
 	<div class="layui-container">
 		<div class="layui-row">
-			<div class="layui-col-md12">
-				<div class="layui-col-md4 layui-col-md-offset4">
-					<h1 align="center">客户注册</h1>
-					<h4 align="center" style="color: red"> ${sessionScope.error}</h4><br>
-					<form class="layui-form" action="${PATH}/cust/regiterCust" method="post">
-						<div class="layui-form-item">
-							<label class="layui-form-label">用户名</label>
-							<div class="layui-input-block">
-								<input type="text" name="custName" required lay-verify="required"
-									placeholder="请输入用户名" autocomplete="off" class="layui-input">
-							</div>
+			<h1 align="center">技师注册</h1>
+			<h4 align="center" style="color: red">${sessionScope.error}</h4>
+			<br>
+			<form class="layui-form" action="${PATH}/cust/regiterCust"
+				method="post">
+				<div class="layui-col-md6">
+					<div class="layui-form-item">
+						<label class="layui-form-label">登录名</label>
+						<div class="layui-input-block">
+							<input type="text" name="custName" required lay-verify="required"
+								placeholder="请输入登录名" autocomplete="off" class="layui-input">
 						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">昵称</label>
-							<div class="layui-input-block">
-								<input type="text" name="custNick" required lay-verify="required"
-									placeholder="请输入昵称" autocomplete="off" class="layui-input">
-							</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">真实姓名</label>
+						<div class="layui-input-block">
+							<input type="text" name="custName" required lay-verify="required"
+								placeholder="请输入真实姓名" autocomplete="off" class="layui-input">
 						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">密码</label>
-							<div class="layui-input-block">
-								<input type="text" name="formPwd1" required lay-verify="required"
-									placeholder="请输入密码" autocomplete="off" class="layui-input">
-							</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">电话号码</label>
+						<div class="layui-input-block">
+							<input type="number" name="custName" required
+								lay-verify="required" placeholder="请输入电话号码" autocomplete="off"
+								class="layui-input">
 						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">确认密码</label>
-							<div class="layui-input-block">
-								<input type="text" name="formPwd2" required lay-verify="required"
-									placeholder="请确认密码" autocomplete="off" class="layui-input">
-							</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">密码</label>
+						<div class="layui-input-block">
+							<input type="text" name="formPwd1" required lay-verify="required"
+								placeholder="请输入密码" autocomplete="off" class="layui-input">
 						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">邮箱</label>
-							<div class="layui-input-block">
-								<input type="email"  name="custEmail" required lay-verify="required"
-									placeholder="请输入邮箱" id="regiterEmailInput" autocomplete="off" class="layui-input">
-							</div>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">验证码</label>
-							<div class="layui-input-inline">
-								<input style="margin-left: 10px;width: 270px" type="number"  name="formCode" required lay-verify="required"
-									placeholder="请输入验证码" autocomplete="off" class="layui-input">
-							</div>
-							<div class="layui-form-mid layui-word-aux" style="margin-left: 10px"><input type="button" class="layui-btn  layui-btn-primary" id="codeBtn" value="点击获取验证码" onclick="sendemail()"/> </div>
-						</div>
-						
+					</div>
 
-						<div class="layui-form-item">
-							<div class="layui-input-block">
-								<button class="layui-btn" type="submit" lay-submit>注册</button>
-								<button type="reset" class="layui-btn layui-btn-primary">重置</button>
-							</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">确认密码</label>
+						<div class="layui-input-block">
+							<input type="text" name="formPwd2" required lay-verify="required"
+								placeholder="请确认密码" autocomplete="off" class="layui-input">
 						</div>
-					</form>
-
+					</div>
 				</div>
-			</div>
-
+				<div class="layui-col-md6">
+					<div class="layui-form-item">
+						<label class="layui-form-label">邮箱</label>
+						<div class="layui-input-block">
+							<input type="email" name="custEmail" required
+								lay-verify="required" placeholder="请输入邮箱" id="regiterEmailInput"
+								autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">验证码</label>
+						<div class="layui-input-inline">
+							<input style="margin-left: 10px" type="number"
+								name="formCode" required lay-verify="required"
+								placeholder="请输入验证码" autocomplete="off" class="layui-input">
+						</div>
+						<div class="layui-word-aux">
+							<input type="button" class="layui-btn  layui-btn-primary"
+								id="codeBtn" value="获取验证码" onclick="sendemail()" />
+						</div>
+					</div>
+					<div class="layui-col-md6"></div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn" type="submit" lay-submit>申请注册</button>
+						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					</div>
+				</div>
+			</form>
 		</div>
 
 	</div>
@@ -190,9 +203,9 @@ input::-webkit-outer-spin-button,
 		    	method:"get",
 		    	success:function(res){
 		    		if(res.code==100){
-		    			layer.msg(res.extend.msg,{icon:6});
+		    			layer(res.extend.msg,{icon:6});
 		    		}else{
-		    			layer.msg(res.extend.msg,{icon:5});
+		    			layer(res.extend.msg,{icon:5});
 		    		}
 		    	},error:function(){
 		    		layer.msg("系统错误！",{icon:5});
