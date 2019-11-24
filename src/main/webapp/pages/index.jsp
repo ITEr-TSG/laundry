@@ -33,11 +33,13 @@
 	<link href="http://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
 	    rel="stylesheet">
 	<!--//webfonts-->
+	<link href="${PATH}/static/layui/css/layui.css" rel='stylesheet'
+	type='text/css' />
 </head>
 
 <body>
 	<!-- header -->
-	<header>
+	<header style="background-color: #393D49; ">
 		<div class="container">
 			<nav class="navbar navbar-expand-lg navbar-light">
 				<a class="navbar-brand" href="${PATH}/pages/index.jsp">
@@ -49,71 +51,76 @@
 				</button>
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav mx-auto text-center">
-						<li class="nav-item active  mr-3">
-							<a class="nav-link" href="${PATH}/pages/index.jsp">主页
-								<span class="sr-only">(current)</span>
-							</a>
+					<ul class="navbar-nav mx-auto text-center layui-nav">
+						 <li class="layui-nav-item">
+						    <a href="${PATH}/pages/index.jsp">主页</a>
+						  </li>
+						<li class="layui-nav-item  mr-3">
+							<a href="#about">关于</a>
 						</li>
-						<li class="nav-item  mr-3">
-							<a class="nav-link scroll" href="#about">关于</a>
-						</li>
-						<li class="nav-item dropdown mr-3">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-							    aria-expanded="false">
-								匠心衣橱
-							</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item scroll" href="#services">服务</a>
-								<a class="dropdown-item scroll" href="#team">团队</a>
-								<a class="dropdown-item scroll" href="#gallery">图库</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item scroll" href="#pricing">套餐</a>
-								<a class="dropdown-item scroll" href="#testimonials">评价</a>
-							</div>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link scroll" href="#contact">联系我们</a>
+							<li class="layui-nav-item" lay-unselect="">
+							    <a href="javascript:;">匠心衣橱</a>
+							    <dl class="layui-nav-child">
+							      <dd><a  href="#services">服务</a></dd>
+							      <dd><a class="dropdown-item scroll" href="#team">团队</a></dd>
+							      <dd><a class="dropdown-item scroll" href="#gallery">图库</a></dd>
+							      <dd><a class="dropdown-item scroll" href="#pricing">套餐</a></dd>
+							      <dd><a class="dropdown-item scroll" href="#testimonials">评价</a></dd>
+							    </dl>
+							  </li>
+						
+						<li class="layui-nav-item">
+							<a  href="#contact">联系我们</a>
 						</li>
 					</ul>
+					<ul class="layui-nav">
 					<c:choose>
 						<c:when test="${sessionScope.nick == null}">
+							<li class="layui-nav-item  mr-3">
+								<a href="${PATH}/pages/login.jsp">登录</a>
+							</li>
+							<li class="layui-nav-item  mr-3">
+								<a href="${PATH}/pages/admin-login.jsp">后台登录</a>
+							</li>
+						<%-- 
 							<a href="${PATH}/pages/login.jsp"
-									class="btn btn-info btn-lg-block w3ls-btn px-4 text-uppercase font-weight-bold"
-									aria-pressed="false"> 登录 </a>&nbsp;&nbsp;&nbsp;&nbsp;
+								class="btn btn-info btn-lg-block w3ls-btn px-4 text-uppercase font-weight-bold"
+								aria-pressed="false"> 登录 </a>&nbsp;&nbsp;&nbsp;&nbsp;
 								<a href="${PATH}/pages/admin-login.jsp"
-									class="btn btn-info btn-lg-block w3ls-btn px-4 text-uppercase font-weight-bold"
-									aria-pressed="false"> 后台登录 </a>
+								class="btn btn-info btn-lg-block w3ls-btn px-4 text-uppercase font-weight-bold"
+								aria-pressed="false"> 后台登录 </a> --%>
 						</c:when>
 						<c:otherwise>
 							<c:choose>
 								<c:when test="${sessionScope.flag == 1}">
-									<li class="nav-item dropdown mr-3">
-										<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-										    aria-expanded="false">
-											${sessionScope.nick}
-										</a>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="${PATH}/cust/getCustInfo/${sessionScope.id}/${sessionScope.name}">个人中心</a>
-											<a class="dropdown-item" href="${PATH}/cust/loginOut">退出登录</a>
-										</div>
-								  	</li>
+									<li class="layui-nav-item" lay-unselect="">
+											<a href="javascript:;"><img src="/file/header/2.jpg" class="layui-nav-img"> ${sessionScope.nick} </a>
+										<dl class="layui-nav-child">
+											<dd>
+												<a class="dropdown-item" href="${PATH}/cust/getCustInfo/${sessionScope.id}/${sessionScope.name}">个人中心</a>
+											</dd>
+											<dd>
+												<a class="dropdown-item" href="${PATH}/cust/loginOut">退出登录</a>
+											</dd>
+											<dd>
+												<a href="javascript:;">退了</a>
+											</dd>
+										</dl>
 								</c:when>
 								<c:when test="${sessionScope.flag == 2}">
-									<li class="nav-item dropdown mr-3">
-										<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-										    aria-expanded="false">
-											技师专栏
-										</a>
+									<li class="nav-item dropdown mr-3"><a
+										class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+										role="button" data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false"> 技师专栏 </a>
 										<div class="dropdown-menu">
-											<a class="dropdown-item" href="${PATH}/pages/">个人中心</a>
-											<a class="dropdown-item" href="${PATH}/cust/loginOut">退出登录</a>
-										</div>
-								  	</li>	
+											<a class="dropdown-item" href="${PATH}/pages/">个人中心</a> <a
+												class="dropdown-item" href="${PATH}/cust/loginOut">退出登录</a>
+										</div></li>
 								</c:when>
 							</c:choose>
 						</c:otherwise>
-				</c:choose>
+					</c:choose>
+				</ul>
 					
 					
 
@@ -890,6 +897,7 @@
 	<!-- Bootstrap Core JavaScript -->
 	<script src="${PATH}/pages/js/bootstrap.js ">
 	</script>
+	<script src="${PATH}/static/layui/layui.all.js"></script>
 	<!-- //Bootstrap Core JavaScript -->
 </body>
 

@@ -33,10 +33,22 @@ form {
 h1 {
 	padding: 100px 0px 50px 0px
 }
+.layui-form-label{
+	width: 100px;
+
+}
+
+input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    input[type="number"]{
+        -moz-appearance: textfield;
+    }
 </style>
 
 <body>
-	<div class="container-fluid" style="background-color: gray;">
+	<div class="container-fluid" style="background-color: #393D49;">
 		<nav class="navbar navbar-expand-lg navbar-light">
 			<a class="navbar-brand" href="${PATH}/pages/index.jsp"> <i
 				class="fab fa-empire"></i>
@@ -50,13 +62,14 @@ h1 {
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mx-auto text-center">
 				</ul>
-				<a href="${PATH}/pages/cust-regiter.jsp"
-					class="btn btn-info btn-lg-block w3ls-btn px-4 text-uppercase font-weight-bold"
-					aria-pressed="false"> 注册客户 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a
-					href="${PATH}/pages/technician-regiter.jsp"
-					class="btn btn-info btn-lg-block w3ls-btn px-4 text-uppercase font-weight-bold"
-					aria-pressed="false"> 注册技师 </a>
-
+				<ul class="layui-nav">
+					<li class="layui-nav-item  mr-3">
+					<a href="${PATH}/pages/cust-regiter.jsp">注册客户</a>
+					</li>
+					<li class="layui-nav-item  mr-3">
+						<a href="${PATH}/pages/technician-regiter.jsp">注册技师 </a>
+					</li>
+				</ul>
 			</div>
 		</nav>
 	</div>
@@ -83,7 +96,7 @@ h1 {
 						</div>
 						<div class="layui-form-item">
 							<div class="layui-input-block">
-								<a>忘记密码？</a>
+								<button type="button" id="forgetPwdBtn" class="layui-btn layui-btn-sm layui-btn-primary">忘记密码？</button>
 							</div>
 						</div>
 
@@ -133,7 +146,153 @@ h1 {
 			<!-- //copyright -->
 		</div>
 	</footer>
-
+<!-- 模态款 -->
+<div id="forgetPwdModal" style="display: none;">
+		<div class="layui-row">
+			<div class="layui-col-md10 layui-col-md-offset1" style="margin-top: 10px">
+				<div class="layui-form">
+					<div class="layui-form-item">
+						<label class="layui-form-label">邮箱</label>
+						<div class="layui-input-block">
+							<input type="email"  required lay-verify="required"
+								placeholder="请输入邮箱" id="changeEmailInput" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">验证码</label>
+						<div class="layui-input-inline">
+							<input style="margin-left: 10px;width: 209px" type="number" id="changeCode" required lay-verify="required"
+								placeholder="请输入验证码" autocomplete="off" class="layui-input">
+						</div>
+						<div class="layui-form-mid layui-word-aux" style="margin-left: 10px"><input type="button" class="layui-btn  layui-btn-primary" id="codeBtn" value="点击获取验证码" onclick="sendemail()"/> </div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">密码</label>
+						<div class="layui-input-block">
+							<input type="text" id="change-pwd1" required lay-verify="required"
+								placeholder="请输入密码" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">确认密码</label>
+						<div class="layui-input-block">
+							<input type="text" id="change-pwd2" required lay-verify="required"
+								placeholder="请确认密码" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+					    <div class="layui-input-block">
+					      <button class="layui-btn" type="button" id="custChangePwdBtn">修改</button>
+					    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 <script src="${PATH}/static/layui/layui.all.js"></script>
+<script src="${PATH}/static/js/jquery2.0-min.js"></script>
+<script type="text/javascript">
+$("#custChangePwdBtn").click(function(){
+	layui.use('layer', function(){
+		var layer = layui.layer;
+		var changeEmail =$("#changeEmailInput").val();
+		var reg = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+	    if(!reg.test(changeEmail)){
+	    	layer.msg("请输入正确的邮箱！",{icon:5});
+	    	return;
+	    }
+		var changeCode =$("#changeCode").val();
+		var changePwd1 =$("#change-pwd1").val();
+		var changePwd2 =$("#change-pwd2").val();
+		if(changePwd1!=changePwd2){
+			layer.msg("两次输入的密码不一致！",{icon:5});
+	    	return;
+		}
+		$.ajax({
+			url:"${PATH}/cust/forgetPwd",
+			method:"post",
+			contentType: "application/json",//必须指定，否则会报415错误
+		    dataType : 'json',
+			data:JSON.stringify({
+				email:changeEmail,code:changeCode,changePwd:changePwd2
+			}),
+			success:function(res){
+				if(res.code==100){
+					layer.msg(res.extend.msg,{icon:6},function(){
+						layer.closeAll();
+					});
+				}else{
+					layer.msg(res.extend.msg,{icon:5},function(){
+						layer.closeAll();
+					});
+				}
+			},error:function(){
+				layer.msg("系统错误！",{icon:5});
+			}
+		});
+	
+	})
+});
+
+$("#forgetPwdBtn").click(function(){
+	layui.use('layer', function(){
+		var layer = layui.layer;
+		layer.open({
+			type : 1,//类型
+			area : [ '400px', '400px' ],//定义宽和高
+			title : '积分充值',//题目
+			shadeClose : false,//点击遮罩层关闭
+			content : $('#forgetPwdModal')
+			//打开的内容
+		});
+	})
+	
+});
+
+var countdown=60; 
+function sendemail(){
+	layui.use('layer', function(){
+	  	var layer = layui.layer;
+	  	var obj = $("#codeBtn");
+	    var email = $("#changeEmailInput").val();
+	    var reg = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+	    if(!reg.test(email)){
+	    	layer.msg("请输入正确的邮箱！",{icon:5});
+	    	return;
+	    }
+	    $.ajax({
+	    	url:"${PATH}/regiterCode/createEmailCode?regEmail="+email,
+	    	method:"get",
+	    	success:function(res){
+	    		if(res.code==100){
+	    			layer.msg(res.extend.msg,{icon:6});
+	    		}else{
+	    			layer.msg(res.extend.msg,{icon:5});
+	    		}
+	    	},error:function(){
+	    		layer.msg("系统错误！",{icon:5});
+	    		return;
+	    	}
+	    });
+	    settime(obj);
+	});
+    }
+function settime(obj) { //发送验证码倒计时
+    if (countdown == 0) { 
+        obj.attr('disabled',false); 
+        //obj.removeattr("disabled"); 
+        obj.val("点击获取验证码");
+        countdown = 60; 
+        return;
+    } else { 
+        obj.attr('disabled',true);
+        obj.val("重新发送(" + countdown + ")");
+        countdown--; 
+    } 
+setTimeout(function() { 
+    settime(obj) }
+    ,1000) 
+}
+</script>
 </html>

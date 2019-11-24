@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hp.technician.mapper.TechnicianMapper">
+
+    <!-- 开启二级缓存 -->
+    <!-- <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/> -->
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hp.technician.beans.Technician">
+        <id column="technician_id" property="technicianId" />
+        <result column="techn_nick" property="technNick" />
+        <result column="techn_real_name" property="technRealName" />
+        <result column="techn_phone" property="technPhone" />
+        <result column="techn_password" property="technPassword" />
+        <result column="techn_email" property="technEmail" />
+        <result column="techn_photo" property="technPhoto" />
+        <result column="techn_remarks" property="technRemarks" />
+        <result column="techn_sort" property="technSort" />
+        <result column="techn_integral" property="technIntegral" />
+        <result column="techn_state" property="technState" />
+        <result column="create_time" property="createTime" />
+        <result column="change_time" property="changeTime" />
+        <result column="is_del" property="isDel" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        technician_id, techn_nick, techn_real_name, techn_phone, techn_password, techn_email, techn_photo, techn_remarks, techn_sort,techn_integral, techn_state, create_time, change_time, is_del
+    </sql>
+
+</mapper>

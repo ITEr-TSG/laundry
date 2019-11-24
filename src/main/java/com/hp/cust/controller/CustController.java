@@ -49,6 +49,33 @@ public class CustController {
 	private CustService custSer;		//客户
 	
 	/**
+	 * 忘记密码
+	 * */
+	@RequestMapping(value="/forgetPwd",method=RequestMethod.POST)
+	@ResponseBody
+	public Msg forgetPwd(@RequestBody Map o) {
+		String email = (String) o.get("email");
+		String code = (String) o.get("code");
+		String pwd = (String) o.get("changePwd");
+		EntityWrapper<RegiterCode> codeWra = new EntityWrapper<>();
+		codeWra.eq("regiter_email", email).eq("code", code);
+		int count = regiterCodeSer.selectCount(codeWra);
+		if(count == 0) {
+			return Msg.fail().add("msg","验证码错误！");
+		}
+		regiterCodeSer.delete(codeWra);
+		Cust entity = new Cust();
+		entity.setCustPassword(pwd);
+		EntityWrapper<Cust> wrapper = new EntityWrapper<>();
+		wrapper.eq("cust_email", email);
+		boolean b = custSer.update(entity, wrapper);
+		if(b) {
+			return Msg.success().add("msg","修改成功！请登录！");
+		}
+		return Msg.fail().add("msg","修改失败！");
+	}
+	
+	/**
 	 * 修改资料
 	 * */
 	@RequestMapping(value="/changeCustInfo",method=RequestMethod.POST)

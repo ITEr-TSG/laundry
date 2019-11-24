@@ -15,16 +15,13 @@
                         <ul>
                             <li><a href="${PATH}/cust/toAddCustPage">添加客户</a></li>
                             <li><a href="${PATH}/cust/toListCustPage">所有客户</a></li>
-                            <li><a href="${PATH}/feedDiscount/mangeSortAndDiscount">反馈分类和优惠卷</a></li><!-- 放在了中间表的控制器 -->
                         </ul>
                     </li>
                     <li>
-                        <a class="sidebar-sub-toggle"><i class="ti-time"></i> 预约管理 <span class="sidebar-collapse-icon ti-angle-down"></span></a>
+                        <a class="sidebar-sub-toggle"><i class="ti-time"></i> 技师管理 <span class="sidebar-collapse-icon ti-angle-down"></span></a>
                         <ul>
-                            <li><a href="${PATH}/appointment/toValidAppointPage">有效预约</a></li>
-                            <li><a href="${PATH}/appointment/toAddApointPage">添加预约</a></li>
-                            <%-- <li><a href="${PATH}/appointment/toAfterApointPage">服务之后</a></li> --%>
-                            
+                            <li><a href="${PATH}/technSort/toMenageSortPage">分类管理</a></li>
+                            <li><a href="${PATH}/technician/toTechnListPage">所有技师</a></li>
                         </ul>
                     </li>
                     <li>

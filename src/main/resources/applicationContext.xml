@@ -49,10 +49,10 @@
             </array>
         </property>
 		<!-- 全局配置注入 -->
-	    <property name="globalConfig" ref="globalConfiguration" />
+	    <property name="globalConfig" ref="globalConfig" />
 	</bean>
 	<!-- MP的全局配置 -->
-	<bean id="globalConfiguration" class="com.baomidou.mybatisplus.entity.GlobalConfiguration">
+	<bean id="globalConfig" class="com.baomidou.mybatisplus.entity.GlobalConfiguration">
 	    <!--
 			AUTO->`0`("数据库ID自增")
 		 	INPUT->`1`(用户输入ID")

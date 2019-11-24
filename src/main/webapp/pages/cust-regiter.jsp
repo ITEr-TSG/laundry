@@ -48,7 +48,7 @@ input::-webkit-outer-spin-button,
 </style>
 
 <body>
-	<div class="container-fluid" style="background-color: gray;">
+	<div class="container-fluid" style="background-color: #393D49;">
 		<nav class="navbar navbar-expand-lg navbar-light">
 			<a class="navbar-brand" href="${PATH}/pages/index.jsp"> <i
 				class="fab fa-empire"></i>
@@ -62,13 +62,14 @@ input::-webkit-outer-spin-button,
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mx-auto text-center">
 				</ul>
-				<a href="${PATH}/pages/login.jsp"
-					class="btn btn-info btn-lg-block w3ls-btn px-4 text-uppercase font-weight-bold"
-					aria-pressed="false"> 客户登录 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a
-					href="${PATH}/pages/technician-regiter.jsp"
-					class="btn btn-info btn-lg-block w3ls-btn px-4 text-uppercase font-weight-bold"
-					aria-pressed="false"> 注册技师 </a>
-
+				<ul class="layui-nav">
+					<li class="layui-nav-item  mr-3">
+					<a href="${PATH}/pages/login.jsp">登录</a>
+					</li>
+					<li class="layui-nav-item  mr-3">
+						<a href="${PATH}/pages/technician-regiter.jsp">注册技师 </a>
+					</li>
+				</ul>
 			</div>
 		</nav>
 	</div>

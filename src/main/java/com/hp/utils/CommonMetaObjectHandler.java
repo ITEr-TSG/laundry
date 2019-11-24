@@ -27,26 +27,25 @@ public class CommonMetaObjectHandler extends MetaObjectHandler {
 			Date date = new Date();
 			setFieldValByName("createTime", date, metaObject);
 		}
+		// state自动填充为200待审核状态
+		Object technState = getFieldValByName("technState", metaObject);
+		if (technState == null) {
+			setFieldValByName("technState", "200", metaObject);
+		}
 	}
 	/**
 	 * 更新时
 	 * */
 	@Override
 	public void updateFill(MetaObject metaObject) {
-		// creatTime自动填充为当前时间
-		/*
-		 * Object updataTime = getFieldValByName("updataTime", metaObject); if
-		 * (updataTime == null) { Date date = new Date(); SimpleDateFormat dateFormat=
-		 * new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss"); setFieldValByName("updataTime",
-		 * dateFormat.format(date), metaObject); }
-		 */
-		// shipTime自动填充为当前时间
-		/*
-		 * Object shipTime = getFieldValByName("shipTime", metaObject); if (shipTime ==
-		 * null) { Date date = new Date(); SimpleDateFormat dateFormat= new
-		 * SimpleDateFormat("yyyy-MM-dd :hh:mm:ss"); setFieldValByName("shipTime",
-		 * dateFormat.format(date), metaObject); }
-		 */
+		// changeTime
+		Object changeTime = getFieldValByName("changeTime", metaObject);
+		if (changeTime == null) {
+			Date date = new Date();
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
+			setFieldValByName("changeTime", dateFormat.format(date), metaObject);
+		}
+		
 	}
 
 }

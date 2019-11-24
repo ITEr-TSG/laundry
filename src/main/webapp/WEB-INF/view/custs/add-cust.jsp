@@ -93,8 +93,7 @@ input[type="number"] {
 									<h4>添加客户</h4>
 								</div>
 								<div class="card-body">
-									<form class="layui-form" action="${PATH}/cust/regiterCust"
-										method="post">
+									<form class="layui-form" >
 										<div class="layui-form-item">
 											<label class="layui-form-label">用户名</label>
 											<div class="layui-input-block">
