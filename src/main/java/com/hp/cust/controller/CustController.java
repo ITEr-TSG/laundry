@@ -118,12 +118,11 @@ public class CustController {
 	@RequestMapping(value="/recharge",method=RequestMethod.GET)
 	@ResponseBody
 	public Msg recharge(@RequestParam("id")Integer id,@RequestParam("integral")Integer integral) {
-		
 		Cust cust = custSer.selectById(id);
 		Integer old = cust.getCustIntegral();
-		
 		Cust entity = new Cust();
 		entity.setCustId(id);
+		
 		entity.setCustIntegral(old+integral);
 		boolean b = custSer.updateById(entity);
 		if(!b) {
@@ -204,11 +203,10 @@ public class CustController {
 	public Map<String, Object> getCustList(@RequestBody Map<Object,Object> kwMap) throws ParseException {
 		int page = (int) kwMap.get("page");
 		int limit = (int) kwMap.get("limit");
-		
 		ArrayList<Map> arrayList = new ArrayList<>();
 		arrayList = (ArrayList<Map>) kwMap.get("kwdata");
-		HashMap<String, Object> afterMap = AnalysisKeyWordsListUtils.analysisKeyWordsList(arrayList);
-		
+		AnalysisKeyWordsListUtils utils = new AnalysisKeyWordsListUtils();
+		HashMap<String, Object> afterMap = utils.analysisKeyWordsList(arrayList);
 		String name = (String) afterMap.get("custName");
 		String email = (String) afterMap.get("custEmail");
 		String start_date = (String) afterMap.get("start_date");

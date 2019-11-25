@@ -7,10 +7,6 @@
                         <a href="${PATH}/admin/toIndex"><i class="ti-home"></i> 首页</a>
                     </li>
                     <li>
-                    	<a href="${PATH}/discount/useCouponByCode"><i class="ti-heart"></i> 使用优惠卷</a>
-                    </li>
-                    
-                    <li>
                         <a class="sidebar-sub-toggle"><i class="ti-user"></i>客户管理<span class="sidebar-collapse-icon ti-angle-down"></span></a>
                         <ul>
                             <li><a href="${PATH}/cust/toAddCustPage">添加客户</a></li>
@@ -25,30 +21,30 @@
                         </ul>
                     </li>
                     <li>
-                        <a class="sidebar-sub-toggle"><i class="ti-bar-chart-alt"></i>  菜单管理  <span class="sidebar-collapse-icon ti-angle-down"></span></a>
+                        <a class="sidebar-sub-toggle"><i class="ti-bar-chart-alt"></i>积分管理<span class="sidebar-collapse-icon ti-angle-down"></span></a>
                         <ul>
-                            <li><a href="${PATH}/foodMenus/toAddFoodMenusPage">添加菜单</a></li>
-                            <li><a href="${PATH}/foodMenus/toFoodMenusListPage">菜单管理</a></li>
+                            <li><a href="${PATH}/foodMenus/toAddFoodMenusPage">客户积分</a></li>
+                            <li><a href="${PATH}/foodMenus/toFoodMenusListPage">技师积分</a></li>
                               
                         </ul>
                     </li>
                     <li>
-                        <a class="sidebar-sub-toggle"><i class="ti-crown"></i>  新品管理<span class="sidebar-collapse-icon ti-angle-down"></span></a>
+                        <a class="sidebar-sub-toggle"><i class="ti-crown"></i>订单管理<span class="sidebar-collapse-icon ti-angle-down"></span></a>
                         <ul>
-                            <li><a href="${PATH}/newFood/toAddNewPage">添加新品</a></li>
-                            <li><a href="${PATH}/newFood/toNewFoodListPage">上新管理</a></li>
+                            <li><a href="${PATH}/newFood/toAddNewPage">订单条目</a></li>
+                            <li><a href="${PATH}/newFood/toNewFoodListPage">订单中心</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a class="sidebar-sub-toggle"><i class="ti-timer"></i>  即将推出<span class="sidebar-collapse-icon ti-angle-down"></span></a>
+                        <a class="sidebar-sub-toggle"><i class="ti-timer"></i>博客管理<span class="sidebar-collapse-icon ti-angle-down"></span></a>
                         <ul>
-                            <li><a href="${PATH}/soonFood/toAddSoonPage">添加推新</a></li>
-                            <li><a href="${PATH}/soonFood/toSoonFoodListPage">推新管理</a></li>
+                            <li><a href="${PATH}/soonFood/toAddSoonPage">官方博客</a></li>
+                            <li><a href="${PATH}/soonFood/toSoonFoodListPage">技师博客</a></li>
                         </ul>
                     </li>
-                    <%-- <li>
-                    	<a href="${PATH}/discount/useCouponByCode"><i class="ti-shield"></i> 登录日志</a>
-                    </li> --%>
+                    <li>
+                    	<a href="${PATH}/discount/useCouponByCode"><i class="ti-shield"></i> 联系我们</a>
+                    </li>
                     <li><a href="${PATH}/admin/loginOut"><i class="ti-close"></i> 退出登录</a></li>
                 </ul>
             </div>

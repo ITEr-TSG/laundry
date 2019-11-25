@@ -30,7 +30,7 @@ public class CommonMetaObjectHandler extends MetaObjectHandler {
 		// state自动填充为200待审核状态
 		Object technState = getFieldValByName("technState", metaObject);
 		if (technState == null) {
-			setFieldValByName("technState", "200", metaObject);
+			setFieldValByName("technState", "待审核", metaObject);
 		}
 	}
 	/**

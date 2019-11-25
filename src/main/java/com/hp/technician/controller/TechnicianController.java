@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,12 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.hp.code.beans.RegiterCode;
 import com.hp.code.service.RegiterCodeService;
-import com.hp.cust.beans.Cust;
+import com.hp.technician.beans.TechnMidSort;
 import com.hp.technician.beans.Technician;
+import com.hp.technician.service.TechnMidSortService;
 import com.hp.technician.service.TechnicianService;
 import com.hp.utils.AnalysisKeyWordsListUtils;
+import com.hp.utils.EmailUntils;
 import com.hp.utils.Msg;
 import com.hp.utils.UploadFileUtil;
 
@@ -51,9 +54,134 @@ public class TechnicianController {
 	@Autowired
 	private RegiterCodeService regiterCodeSer;	//验证码
 	
+	@Autowired
+	private TechnMidSortService midSer;			//中间表
 	
-
 	
+	/**
+	 * 批量删除
+	 * */
+	@RequestMapping(value="/delTechnByIds",method=RequestMethod.POST)
+	@ResponseBody
+	public Msg delCustByIds(@RequestBody ArrayList<Integer> list) {
+		boolean b = technSer.deleteBatchIds(list);
+		if(!b) {
+			return Msg.fail().add("msg","删除失败！");
+		}
+		return Msg.success().add("msg", "删除成功");
+	}
+	/**
+	 * 批量审核
+	 * */
+	@RequestMapping(value="/passTechnByIds",method=RequestMethod.POST)
+	@ResponseBody
+	public Msg passTechnByIds(@RequestBody ArrayList<Integer> list) {
+		List<Technician> selectBatchIds = technSer.selectBatchIds(list);
+		String[] email = new String[selectBatchIds.size()];
+		for (int i = 0; i < selectBatchIds.size(); i++) {
+			String state = selectBatchIds.get(i).getTechnState();
+			if(!state.equals("待审核")) {		//判断选中的技师中是否有非待审核状态的
+				return Msg.fail().add("msg","选中的技师中有非待审核状态！");
+			}
+			email[i]=selectBatchIds.get(i).getTechnEmail();
+			selectBatchIds.get(i).setTechnState("已通过");
+		}
+		boolean c = EmailUntils.sendEmails(email,"success");//这里有问题，应当记录发送失败的邮箱进行失败回调
+		boolean b = technSer.updateBatchById(selectBatchIds);
+		if(!b) {
+			return Msg.fail().add("msg","失败！");
+		}
+		return Msg.success().add("msg", "成功");
+	}
+	/**
+	 * 批量审核
+	 * */
+	@RequestMapping(value="/rejectTechnByIds",method=RequestMethod.POST)
+	@ResponseBody
+	public Msg rejectTechnByIds(@RequestBody ArrayList<Integer> list) {
+		List<Technician> selectBatchIds = technSer.selectBatchIds(list);
+		String[] email = new String[selectBatchIds.size()];
+		for (int i = 0; i < selectBatchIds.size(); i++) {
+			String state = selectBatchIds.get(i).getTechnState();
+			if(!state.equals("待审核")) {		//判断选中的技师中是否有非待审核状态的
+				return Msg.fail().add("msg","选中的技师中有非待审核状态！");
+			}
+			email[i]=selectBatchIds.get(i).getTechnEmail();
+			selectBatchIds.get(i).setTechnState("已驳回");
+		}
+		boolean c = EmailUntils.sendEmails(email,"false");//这里有问题，应当记录发送失败的邮箱进行失败回调
+		boolean b = technSer.updateBatchById(selectBatchIds);
+		if(!b) {
+			return Msg.fail().add("msg","失败！");
+		}
+		return Msg.success().add("msg", "成功");
+	}
+	
+	
+	
+	/**
+	 * 得到所有技师
+	 * @return 
+	 * @throws ParseException 
+	 * */
+	@RequestMapping(value="/getTechnList",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getTechnList(@RequestBody Map map) throws ParseException {
+		int page = (int) map.get("page");
+		int limit = (int) map.get("limit");
+		ArrayList<Map> arrayList = new ArrayList<>();
+		arrayList = (ArrayList<Map>) map.get("kwdata");
+		AnalysisKeyWordsListUtils utils = new AnalysisKeyWordsListUtils();
+		HashMap<String, Object> afterMap = utils.analysisKeyWordsList(arrayList);
+		String name = (String) afterMap.get("name");
+		String email = (String) afterMap.get("email");
+		String start_date = (String) afterMap.get("start_date");
+		String end_date = (String) afterMap.get("end_date");
+		String min_integral = (String) afterMap.get("min_integral");
+		String max_integral = (String) afterMap.get("max_integral");
+		String technState = (String) afterMap.get("technState");
+		EntityWrapper<Technician> wrapper = new EntityWrapper<>();
+		List<Integer> sortIds = (List) afterMap.get("sortId");
+		if(!sortIds.isEmpty()) {
+			EntityWrapper<TechnMidSort> midWrapper = new EntityWrapper<>();
+			midWrapper.in("sort_id", sortIds);
+			//查询中间表
+			List<TechnMidSort> list = midSer.selectList(midWrapper);
+			ArrayList<Integer> technIds = new ArrayList<>();
+			for (TechnMidSort technMidSort : list) {
+				technIds.add(technMidSort.getTechnId());
+			}
+			wrapper.in("technician_id",technIds);
+		}
+		DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		if(!name.equals("")) {
+			wrapper.like("techn_real_name", name);
+		}
+		if(!technState.equals("0")) {
+			wrapper.eq("techn_state", technState);
+		}
+		if(!email.equals("")) {
+			wrapper.like("techn_email", email);
+		}
+		if(!start_date.equals("") && !end_date.equals("")) {
+			Date startDate = format1.parse(start_date);
+			Date endDate = format1.parse(end_date);
+			wrapper.between("create_time", startDate, endDate);
+		}
+		if(!min_integral.equals("") && !max_integral.equals("")) {
+			int min = Integer.parseInt(min_integral);
+			int max = Integer.parseInt(max_integral);
+			wrapper.between("techn_integral", min, max);
+		}
+		Page<Map<String, Object>> selectMapsPage = technSer.selectMapsPage(new Page<>(page, limit), wrapper);
+		Map<String,Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("status",0);
+		resultMap.put("message","所有客户");
+		resultMap.put("total",selectMapsPage.getTotal());
+		resultMap.put("data",selectMapsPage.getRecords());
+		return resultMap;
+		
+	}
 	
 	
 	/**

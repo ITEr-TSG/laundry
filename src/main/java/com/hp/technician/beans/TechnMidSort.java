@@ -1,12 +1,14 @@
 package com.hp.technician.beans;
 
 import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -35,8 +37,19 @@ public class TechnMidSort extends Model<TechnMidSort> {
      */
     private Integer sortId;
 
+    @TableField(exist=false)
+    private List<Integer> sortIds;
 
-    public Integer getMidId() {
+    
+    public List<Integer> getSortIds() {
+		return sortIds;
+	}
+
+	public void setSortIds(List<Integer> sortIds) {
+		this.sortIds = sortIds;
+	}
+
+	public Integer getMidId() {
         return midId;
     }
 
@@ -65,12 +78,11 @@ public class TechnMidSort extends Model<TechnMidSort> {
         return this.midId;
     }
 
-    @Override
-    public String toString() {
-        return "TechnMidSort{" +
-        ", midId=" + midId +
-        ", technId=" + technId +
-        ", sortId=" + sortId +
-        "}";
-    }
+	@Override
+	public String toString() {
+		return "TechnMidSort [midId=" + midId + ", technId=" + technId + ", sortId=" + sortId + ", sortIds=" + sortIds
+				+ "]";
+	}
+
+  
 }
