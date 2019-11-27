@@ -236,8 +236,4 @@ public class Technician extends Model<Technician> {
 				+ changeTime + ", isDel=" + isDel + ", formPwd1=" + formPwd1 + ", formPwd2=" + formPwd2 + ", formCode="
 				+ formCode + "]";
 	}
-
-	
-	
-    
 }

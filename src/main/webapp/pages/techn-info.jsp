@@ -88,14 +88,17 @@ input[type="number"] {
 										</dl>
 								</c:when>
 								<c:when test="${sessionScope.flag == 2}">
-									<li class="nav-item dropdown mr-3"><a
-										class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-										role="button" data-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false"> 技师专栏 </a>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="${PATH}/pages/">个人中心</a> <a
-												class="dropdown-item" href="${PATH}/cust/loginOut">退出登录</a>
-										</div></li>
+									<li class="layui-nav-item" lay-unselect="">
+											<a href="javascript:;"><img src="${sessionScope.photo}" class="layui-nav-img"> ${sessionScope.nick} </a>
+										<dl class="layui-nav-child">
+											<dd>
+												<a class="dropdown-item" href="${PATH}/technician/getTechnInfo/${sessionScope.id}/${sessionScope.phone}">个人中心</a>
+											</dd>
+											<dd>
+												<a class="dropdown-item" href="${PATH}/cust/loginOut">退出登录</a>
+											</dd>
+										</dl>
+									</li>
 								</c:when>
 							</c:choose>
 						</c:otherwise>
@@ -108,14 +111,14 @@ input[type="number"] {
 		<div class="layui-row">
 			<div class="layui-col-md12">
 				<div id="oldCustInfo" class="layui-col-md4 layui-col-md-offset4">
-					<h1 align="center">客户信息</h1>
+					<h1 align="center">技师信息</h1>
 					<h4 align="center" style="color: red">${error}</h4>
 					<br>
 					<div class="layui-form cust-info">
 						<div class="layui-form-item">
 							<label class="layui-form-label">用户名</label>
 							<div class="layui-input-block">
-								<input type="text" readonly="readonly" value="${cust.custName}"
+								<input type="text" readonly="readonly" value="${techn.technRealName}"
 									required lay-verify="required" placeholder="请输入用户名"
 									autocomplete="off" class="layui-input">
 							</div>
@@ -123,7 +126,7 @@ input[type="number"] {
 						<div class="layui-form-item">
 							<label class="layui-form-label">昵称</label>
 							<div class="layui-input-block">
-								<input type="text" readonly="readonly" value="${cust.custNick}"
+								<input type="text"  readonly="readonly" value="${techn.technNick}"
 									required lay-verify="required" placeholder="请输入昵称"
 									autocomplete="off" class="layui-input">
 							</div>
@@ -133,24 +136,38 @@ input[type="number"] {
 							<label class="layui-form-label">邮箱</label>
 							<div class="layui-input-block">
 								<input type="email" id="changeCustInfoEmail" readonly="readonly"
-									value="${cust.custEmail}" required lay-verify="required"
+									value="${techn.technEmail}" required lay-verify="required"
 									placeholder="请输入邮箱" id="regiterEmailInput" autocomplete="off"
 									class="layui-input">
 							</div>
 						</div>
-
+						<div class="layui-form-item">
+							<label class="layui-form-label">电话</label>
+							<div class="layui-input-block">
+								<input type="email" id="changeCustInfoEmail" readonly="readonly"
+									value="${techn.technPhone}" required lay-verify="required"
+									placeholder="请输入邮箱" id="regiterEmailInput" autocomplete="off"
+									class="layui-input">
+							</div>
+						</div>
 						<div class="layui-form-item">
 							<label class="layui-form-label">积分</label>
 							<div class="layui-input-inline">
 								<input readonly="readonly"
-									style="margin-left: 10px; width: 270px" type="number"
-									value="${cust.custIntegral}" required lay-verify="required"
+									style="margin-left: 10px; width: 270px" id="oldIntegral" type="number"
+									value="${techn.technIntegral}" required lay-verify="required"
 									placeholder="请输入验证码" autocomplete="off" class="layui-input">
 							</div>
 							<div class="layui-form-mid layui-word-aux"
 								style="margin-left: 10px">
 								<input type="button" class="layui-btn  layui-btn-primary"
-									id="rechargeBtn" value="积分充值" />
+									id="cashBtn" value="积分提现" />
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">照片</label>
+							<div class="layui-input-block">
+								<img alt="照片" style="width: 100px;height: 141px" src="${techn.technPhoto}">
 							</div>
 						</div>
 						<div class="layui-form-item">
@@ -169,15 +186,15 @@ input[type="number"] {
 				<div id="newCustInfo" hidden="hidden"
 					class="layui-col-md4 layui-col-md-offset4">
 					<h1 align="center">修改信息</h1>
-					<form class="layui-form" action="${PATH}/cust/changeCustInfo"
+					<form class="layui-form" action="${PATH}/technician/changeTechnInfo"
 						method="post">
-						<input type="hidden" name="custId" value="${cust.custId}">
-						<input type="hidden" name="custName" value="${cust.custName}">
-						<input type="hidden" name="custEmail" value="${cust.custEmail}">
+						<input type="hidden" name="technicianId" value="${techn.technicianId}">
+						<input type="hidden" name="technPhone" value="${techn.technPhone}">
+						<input type="hidden" name="technEmail" value="${techn.technEmail}">
 						<div class="layui-form-item">
 							<label class="layui-form-label">昵称</label>
 							<div class="layui-input-block">
-								<input type="text" name="custNick" placeholder="请输入昵称"
+								<input type="text" name="technNick" placeholder="请输入昵称"
 									autocomplete="off" class="layui-input">
 							</div>
 						</div>
@@ -254,32 +271,51 @@ input[type="number"] {
 		</div>
 	</footer>
 	<!-- 模态框 -->
-	<div id="rechargeModal" style="display: none;">
+	<div id="cashModal" style="display: none;">
 		<div class="layui-row">
 			<div class="layui-col-md10 layui-col-md-offset1"
 				style="margin-top: 10px">
-				<div class="layui-form">
-					<input type="hidden" id="custId-recharge" value="${cust.custId}">
+				<form class="layui-form" id="cash_form">
+					<input type="hidden" name="technId" id="techn-cash" value="${techn.technicianId}">
+					<input type="hidden" name="oldIntegral" value="${techn.technIntegral}">
 					<div class="layui-form-item">
-						<label class="layui-form-label">输入金额</label>
+						<label class="layui-form-label">提现方式</label>
 						<div class="layui-input-block">
-							<input type="text" placeholder="请输入金额" id="input_money"
+							<select name="cashWay" lay-verify="required">
+						        <option value="0">---请选择---</option>
+						        <option value="微信">微信</option>
+						        <option value="支付宝">支付宝</option>
+						    </select>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">账号</label>
+						<div class="layui-input-block">
+							<input type="text" name="cashAccount" required lay-verify="required"
 								autocomplete="off" class="layui-input">
 						</div>
 					</div>
 					<div class="layui-form-item">
-						<label class="layui-form-label">积分</label>
+						<label class="layui-form-label">输入积分</label>
 						<div class="layui-input-block">
-							<input type="number" id="integral" required lay-verify="required"
+							<input type="text" value="${techn.technIntegral}" name="cashIntegral" id="input_money"
+								autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">金额</label>
+						<div class="layui-input-block">
+							<input type="number" id="integral" name="cashMoney" required lay-verify="required"
 								readonly="readonly" autocomplete="off" class="layui-input">
 						</div>
 					</div>
 					<div class="layui-form-item">
 						<div class="layui-input-block">
-							<button class="layui-btn" type="button" id="confirm-recharge">充值</button>
+							<button class="layui-btn" type="button" id="confirm-cash">申请提现</button>
 						</div>
 					</div>
-				</div>
+				</form>
+				<p style="color: red;">注意：积分的提现，平台收取最终10%的费用！</p>
 			</div>
 		</div>
 	</div>
@@ -342,16 +378,16 @@ input[type="number"] {
 			settime(obj)
 		}, 1000)
 	}
-	//充值
-	$("#rechargeBtn").click(function() {
+	//提现
+	$("#cashBtn").click(function() {
 		layui.use([ 'util', 'laydate', 'layer' ], function() {
 			var util = layui.util, laydate = layui.laydate, layer = layui.layer;
 			layer.open({
 				type : 1,//类型
-				area : [ '400px', '300px' ],//定义宽和高
-				title : '积分充值',//题目
+				area : [ '400px', '400px' ],//定义宽和高
+				title : '积分提现',//题目
 				shadeClose : false,//点击遮罩层关闭
-				content : $('#rechargeModal')
+				content : $('#cashModal')
 			//打开的内容
 			});
 
@@ -363,59 +399,58 @@ input[type="number"] {
 		if (isNaN(num1)) { //如果为非数字，结果为空
 			$("#integral").val() = "";
 		} else { //将第二个输入框设置为美元值乘以汇率的结果
-			$("#integral").val(num1 * 100)
+			$("#integral").val(num1 / 100)
 		}
 	});
-	//充值
-	$("#confirm-recharge").click(function() {
-		var id = $("#custId-recharge").val();
+	//提现
+	$("#confirm-cash").click(function() {
+		var id = $("#techn-cash").val();
+		var data = $("#cash_form").serialize() ;
 		var integral = $("#integral").val();
-		layui.use('layer', function() {
-			if (integral == "") {
-				layer.msg("请输入金额！")
-				return;
-			}
-			layer.open({
-				type : 1,
-				time : 5000,
-				anim : 1,
-				area : '460px',
-				content : '<img alt="收款码"  style="width: 457;height: 440"  src="${PATH}/pages/images/weixin.jpg">',
-				success : function(layero, index) {
-					$.ajax({
-						url : "${PATH}/cust/recharge?id=" + id + "&integral=" + integral,
-						method : "get",
-						success : function(res) {
-							if (res.code == 100) {
-								layer.msg(res.extend.msg, {
-									icon : 6,
-									time : 5000
-								}, function() {
-									location.reload();
-								})
-							} else {
-								layer.msg(res.extend.msg, {
-									icon : 5
-								}, function() {
-									location.reload();
-								})
-							}
-						},
-						error : function() {
-							layer.msg("系统错误！", {
-								icon : 5
-							})
-						}
-					});
+		var input_money = $("#input_money").val();
+		var oldIntegral = $("#oldIntegral").val();
+		if(input_money>oldIntegral){
+			layui.layer.msg("提现积分超额",{icon:5});
+			return ;
+		}
+		if (integral == "0"||integral=="") {
+			layer.msg("请输入积分！")
+			return;
+		}
+		var reg = /^[1-9]\d*$/
+		if(!reg.test(integral)){
+			layui.layer.msg("请您提现整数金额",{icon:5});
+			return ;
+		}
+		$.ajax({
+			url : "${PATH}/cashTechn/cashIntegral",
+			method : "post",
+			data:data,
+			success : function(res) {
+				if (res.code == 100) {
+					layer.msg(res.extend.msg, {
+						icon : 6,
+						time : 5000
+					}, function() {
+						location.reload();
+					})
+				} else {
+					layer.msg(res.extend.msg, {
+						icon : 5
+					})
 				}
-			});
-		})
+			},
+			error : function() {
+				layer.msg("系统错误！", {
+					icon : 5
+				})
+			}
+		});
 	});
 
 	$("#showChangeInfo").click(function() {
 		$("#oldCustInfo").removeClass("layui-col-md-offset4");
 		$("#newCustInfo").removeAttr("hidden");
-
 	})
 </script>
 </html>

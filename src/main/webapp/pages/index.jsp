@@ -82,13 +82,6 @@
 							<li class="layui-nav-item  mr-3">
 								<a href="${PATH}/pages/admin-login.jsp">后台登录</a>
 							</li>
-						<%-- 
-							<a href="${PATH}/pages/login.jsp"
-								class="btn btn-info btn-lg-block w3ls-btn px-4 text-uppercase font-weight-bold"
-								aria-pressed="false"> 登录 </a>&nbsp;&nbsp;&nbsp;&nbsp;
-								<a href="${PATH}/pages/admin-login.jsp"
-								class="btn btn-info btn-lg-block w3ls-btn px-4 text-uppercase font-weight-bold"
-								aria-pressed="false"> 后台登录 </a> --%>
 						</c:when>
 						<c:otherwise>
 							<c:choose>
@@ -102,20 +95,21 @@
 											<dd>
 												<a class="dropdown-item" href="${PATH}/cust/loginOut">退出登录</a>
 											</dd>
-											<dd>
-												<a href="javascript:;">退了</a>
-											</dd>
 										</dl>
+									</li>
 								</c:when>
 								<c:when test="${sessionScope.flag == 2}">
-									<li class="nav-item dropdown mr-3"><a
-										class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-										role="button" data-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false"> 技师专栏 </a>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="${PATH}/pages/">个人中心</a> <a
-												class="dropdown-item" href="${PATH}/cust/loginOut">退出登录</a>
-										</div></li>
+									<li class="layui-nav-item" lay-unselect="">
+											<a href="javascript:;"><img src="${sessionScope.photo}" class="layui-nav-img"> ${sessionScope.nick} </a>
+										<dl class="layui-nav-child">
+											<dd>
+												<a class="dropdown-item" href="${PATH}/technician/getTechnInfo/${sessionScope.id}/${sessionScope.phone}">个人中心</a>
+											</dd>
+											<dd>
+												<a class="dropdown-item" href="${PATH}/cust/loginOut">退出登录</a>
+											</dd>
+										</dl>
+									</li>
 								</c:when>
 							</c:choose>
 						</c:otherwise>

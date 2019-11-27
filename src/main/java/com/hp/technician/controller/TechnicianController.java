@@ -10,8 +10,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,6 +60,125 @@ public class TechnicianController {
 	
 	@Autowired
 	private TechnMidSortService midSer;			//中间表
+	
+	/**
+	 * 根据id查询技师
+	 * */
+	@RequestMapping(value="/getById/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public Msg getById(@PathVariable("id")Integer id) {
+		Technician technician = technSer.selectById(id);
+		return Msg.success().add("techn", technician);
+	}
+	
+	/**
+	 * 忘记密码
+	 * */
+	@RequestMapping(value="/forgetPwd",method=RequestMethod.POST)
+	@ResponseBody
+	public Msg forgetPwd(@RequestBody Map o) {
+		String email = (String) o.get("email");
+		String code = (String) o.get("code");
+		String pwd = (String) o.get("changePwd");
+		EntityWrapper<RegiterCode> codeWra = new EntityWrapper<>();
+		codeWra.eq("regiter_email", email).eq("code", code);
+		int count = regiterCodeSer.selectCount(codeWra);
+		if(count == 0) {
+			return Msg.fail().add("msg","验证码错误！");
+		}
+		regiterCodeSer.delete(codeWra);
+		Technician entity = new Technician();
+		entity.setTechnPassword(pwd);
+		EntityWrapper<Technician> wrapper = new EntityWrapper<>();
+		wrapper.eq("techn_email", email);
+		boolean b = technSer.update(entity, wrapper);
+		if(b) {
+			return Msg.success().add("msg","修改成功！请登录！");
+		}
+		return Msg.fail().add("msg","修改失败！");
+	}
+	
+	
+
+	/**
+	 * 修改资料
+	 * */
+	@RequestMapping(value="/changeTechnInfo",method=RequestMethod.POST)
+	public String changeCustInfo(Technician techn,HttpServletRequest req) {
+		//验证两次输入的密码
+		if(!techn.getFormPwd1().equals(techn.getFormPwd2())) {
+			req.getSession().setAttribute("error", "两次密码不一致！");
+			return "redirect:/technician/getTechnInfo/"+techn.getTechnicianId()+"/"+techn.getTechnPhone();
+		}
+		//验证邮箱
+		EntityWrapper<RegiterCode> codeWrapper = new EntityWrapper<>();
+		codeWrapper.eq("regiter_email", techn.getTechnEmail())
+					.eq("code", techn.getFormCode());
+		int count = regiterCodeSer.selectCount(codeWrapper);
+		if(count == 0) {
+			req.getSession().setAttribute("error", "验证码有误！");
+			return "redirect:/technician/getTechnInfo/"+techn.getTechnicianId()+"/"+techn.getTechnPhone();
+		}
+		//删除对应邮箱验证码
+		regiterCodeSer.delete(codeWrapper);
+		Technician entity = new Technician();
+		if(!techn.getFormPwd2().equals("")) {
+			entity.setTechnPassword(techn.getFormPwd2());
+		}
+		entity.setTechnicianId(techn.getTechnicianId());
+		if(!techn.getTechnNick().equals("")) {
+			entity.setTechnNick(techn.getTechnNick());
+		}
+		boolean b = technSer.updateById(entity);
+		if(b) {
+			return "redirect:/technician/loginOut";
+		}else {
+			req.getSession().setAttribute("error", "修改失败！");
+			return "redirect:/technician/getTechnInfo/"+techn.getTechnicianId()+"/"+techn.getTechnPhone();
+		}
+	}
+	
+	
+	/**
+	 * 修改资料前的回显
+	 * */
+	@RequestMapping(value="/getTechnInfo/{id}/{phone}",method=RequestMethod.GET)
+	public String getTechnInfo(@PathVariable Integer id,@PathVariable String phone,Model model) {
+		EntityWrapper<Technician> wrapper = new EntityWrapper<>();
+		wrapper.eq("technician_id", id).eq("techn_phone", phone);
+		Technician techn = technSer.selectOne(wrapper);
+		if(techn == null) {
+			model.addAttribute("error", "未查询到技师信息！");
+			return "forward:/pages/techn-info.jsp";
+		}
+		model.addAttribute("techn", techn);
+		return "forward:/pages/techn-info.jsp";
+	}
+	
+	/**
+	 * 登录
+	 * */
+	@RequestMapping(value="/loginInto",method=RequestMethod.POST)
+	public String loginInto(Technician techn,HttpServletRequest req) {
+		EntityWrapper<Technician> wrapper = new EntityWrapper<>();
+		wrapper.eq("techn_password",techn.getTechnPassword())
+		.andNew()
+		.eq("techn_real_name", techn.getFormCode())
+		.or()
+		.eq("techn_email",  techn.getFormCode());
+		Technician one = technSer.selectOne(wrapper);
+		if(one==null) {
+			req.getSession().setAttribute("errorTechn", "用户名或密码错误");
+			return "redirect:/pages/login.jsp";	
+		}
+		System.out.println(one);
+		req.getSession().setAttribute("nick", one.getTechnNick());
+		req.getSession().setAttribute("phone", one.getTechnPhone());
+		req.getSession().setAttribute("photo", one.getTechnPhoto());
+		req.getSession().setAttribute("id", one.getTechnicianId());
+		req.getSession().setAttribute("flag", 2);
+		return "redirect:/pages/index.jsp";
+	}
 	
 	
 	/**
@@ -249,8 +372,13 @@ public class TechnicianController {
 	}
 	//==========抽取的方法===============
 	/**
-	 * 去往添加技师页面
+	 * 退出登录
 	 * */
+	@RequestMapping(value="/loginOut",method=RequestMethod.GET)
+	public String loginOut(HttpServletRequest req) {
+		req.getSession().invalidate();
+		return "redirect:/pages/index.jsp";
+	}
 	
 	/**
 	 * 抽取方法，验证真实姓名和邮箱是否存在

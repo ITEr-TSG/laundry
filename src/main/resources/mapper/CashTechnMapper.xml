@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hp.integral.mapper.CashTechnMapper">
+
+    <!-- 开启二级缓存 -->
+    <!-- <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/> -->
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hp.integral.beans.CashTechn">
+        <id column="cash_id" property="cashId" />
+        <result column="techn_id" property="technId" />
+        <result column="cash_way" property="cashWay" />
+        <result column="cash_account" property="cashAccount" />
+        <result column="cash_money" property="cashMoney" />
+        <result column="old_integral" property="oldIntegral" />
+        <result column="cash_integral" property="cashIntegral" />
+        <result column="create_time" property="createTime" />
+        <result column="cash_state" property="cashState" />
+         <result column="is_del" property="isDel" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        cash_id, techn_id, cash_way, cash_account, cash_money, old_integral, cash_integral, create_time, cash_state,
+        is_del
+    </sql>
+
+</mapper>
