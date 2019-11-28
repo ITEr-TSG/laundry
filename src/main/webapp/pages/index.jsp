@@ -55,22 +55,21 @@
 						 <li class="layui-nav-item">
 						    <a href="${PATH}/pages/index.jsp">主页</a>
 						  </li>
-						<li class="layui-nav-item  mr-3">
-							<a href="#about">关于</a>
-						</li>
+						
 							<li class="layui-nav-item" lay-unselect="">
 							    <a href="javascript:;">匠心衣橱</a>
 							    <dl class="layui-nav-child">
 							      <dd><a  href="#services">服务</a></dd>
+							      <dd><a class="dropdown-item scroll" href="#about">关于</a></dd>
 							      <dd><a class="dropdown-item scroll" href="#team">团队</a></dd>
 							      <dd><a class="dropdown-item scroll" href="#gallery">图库</a></dd>
 							      <dd><a class="dropdown-item scroll" href="#pricing">套餐</a></dd>
-							      <dd><a class="dropdown-item scroll" href="#testimonials">评价</a></dd>
+							      <dd><a class="dropdown-item scroll" href="#contact">联系我们</a></dd>
 							    </dl>
 							  </li>
 						
 						<li class="layui-nav-item">
-							<a  href="#contact">联系我们</a>
+							<a href="${PATH}/blog/getAllBlogs">博客中心</a>
 						</li>
 					</ul>
 					<ul class="layui-nav">
@@ -106,6 +105,9 @@
 												<a class="dropdown-item" href="${PATH}/technician/getTechnInfo/${sessionScope.id}/${sessionScope.phone}">个人中心</a>
 											</dd>
 											<dd>
+												<a class="dropdown-item" href="${PATH}/blogs/writeBlog/${sessionScope.id}/${sessionScope.phone}">编写博客</a>
+											</dd>
+											<dd>
 												<a class="dropdown-item" href="${PATH}/cust/loginOut">退出登录</a>
 											</dd>
 										</dl>
@@ -131,20 +133,17 @@
 					<ul class="rslides" id="slider3">
 						<li>
 							<div class="slider-info">
-								<h3 class="text-capitalize">We care for all your valued garments </h3>
-								<a class="btn btn-primary  mt-4 text-capitalize scroll" href="#about" role="button">read more</a>
+								<h3 class="text-capitalize">我们照顾您所有珍贵的服装</h3>
 							</div>
 						</li>
 						<li>
 							<div class="slider-info">
-								<h3 class="text-capitalize">Trust Us, We Save Your Time.</h3>
-								<a class="btn btn-primary  mt-4 text-capitalize scroll" href="#about" role="button">read more</a>
+								<h3 class="text-capitalize">相信我们，我们可以节省您的时间。</h3>
 							</div>
 						</li>
 						<li>
 							<div class="slider-info">
-								<h3 class="text-capitalize">we offer the best laundry services</h3>
-								<a class="btn btn-primary  mt-4 text-capitalize scroll" href="#about" role="button">read more</a>
+								<h3 class="text-capitalize">我们提供最好的洗衣服务。</h3>
 							</div>
 						</li>
 					</ul>
@@ -158,7 +157,7 @@
 		<div class="container">
 			<div class="jumbotron text-center pt-0">
 				<img src="${PATH}/pages/images/about.jpg" alt="" class="img-fluid rounded-circle">
-				<h1 class="ab-title my-5">We Promise Highest Quality Care</h1>
+				<h1 class="ab-title my-5">我们承诺最优质的护理</h1>
 				<h2 class="lead">Donec consequat sapien ut leo cursus rhoncus. Nullam dui mi, vulputate ac metus at, semper varius orci. Nulla accumsan
 					ac elit in congue.</h2>
 				<hr class="my-4">
@@ -174,22 +173,22 @@
 	<!--services-->
 	<div class="agileits-services py-md-5 py-3" id="services">
 		<div class="container">
-			<h3 class="w3ls-title text-center text-capitalize pb-md-5 pb-4">what we do</h3>
+			<h3 class="w3ls-title text-center text-capitalize pb-md-5 pb-4">我们所做的</h3>
 			<div class="agileits-services-row row py-md-5 pb-5">
 				<div class="col-lg-3 col-md-6 agileits-services-grids">
 					<span class="fab fa-uniregistry p-4"></span>
-					<h4 class="mt-2 mb-3">Commercial Service</h4>
+					<h4 class="mt-2 mb-3">商业服务</h4>
 					<p>Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur aut</p>
 				</div>
 				<div class="col-lg-3 col-md-6 agileits-services-grids mt-md-0 mt-3">
 					<span class="fab fa-jenkins p-4"></span>
-					<h4 class="mt-2 mb-3">Self Service</h4>
+					<h4 class="mt-2 mb-3">自助服务</h4>
 					<p>Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur aut</p>
 				</div>
 
 				<div class="col-lg-3 col-md-6 agileits-services-grids mt-lg-0 mt-3">
 					<span class="fab fa-schlix p-4"></span>
-					<h4 class="mt-2 mb-3">Faster Service</h4>
+					<h4 class="mt-2 mb-3">更快的服务</h4>
 					<p>Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur aut</p>
 				</div>
 				<div class="col-lg-3 col-md-6 agileits-services-grids mt-lg-0 mt-3">
@@ -205,35 +204,35 @@
 	<section class="agile_stats text-center py-5">
 		<div class="container pt-sm-5">
 			<div class="stats_agile mb-sm-5 mb-3">
-				<h3 class="stat-title text-capitalize pb-md-5 pb-4">let us do your laundry</h3>
+				<h3 class="stat-title text-capitalize pb-md-5 pb-4">衣服交给我 舒心还给你</h3>
 			</div>
 			<div class="row">
 				<div class="col-lg-3 col-md-6">
 					<div class="counter pt-5 px-3 pb-3">
 						<i class="far fa-smile fa-2x"></i>
 						<div class="timer count-title count-number mt-2" data-to="5100" data-speed="1500"></div>
-						<p class="count-text text-capitalize">happy customers</p>
+						<p class="count-text text-capitalize">服务的客户</p>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6 mt-md-0 mt-sm-5 mt-3">
 					<div class="counter  pt-5 px-3 pb-3">
 						<i class=" fab fa-stack-overflow fa-2x"></i>
 						<div class="timer count-title count-number mt-2" data-to="4783" data-speed="1500"></div>
-						<p class="count-text text-capitalize">dry clean</p>
+						<p class="count-text text-capitalize">完成的订单</p>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6 mt-lg-0 mt-sm-5 mt-3">
 					<div class="counter  pt-5 px-3 pb-3">
 						<i class="fas fa-eraser fa-2x"></i>
 						<div class="timer count-title count-number mt-2" data-to="2184" data-speed="1500"></div>
-						<p class="count-text text-capitalize">ironing</p>
+						<p class="count-text text-capitalize">技师团队</p>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6 mt-lg-0  mt-sm-5 mt-3">
 					<div class="counter  pt-5 px-3 pb-3">
 						<i class="fas fa-exclamation fa-2x"></i>
 						<div class="timer count-title count-number mt-2" data-to="1084" data-speed="1084"></div>
-						<p class="count-text text-capitalize">stain removal</p>
+						<p class="count-text text-capitalize">博文数量</p>
 					</div>
 				</div>
 			</div>
@@ -244,7 +243,7 @@
 	<section class="wthree-row py-5" id="team">
 		<div class="container py-md-5 py-3">
 			<div class="py-md-5 py-3 bg-pricemain text-center">
-				<h3 class="w3ls-title text-center text-capitalize pb-md-5 pb-4">meet our team</h3>
+				<h3 class="w3ls-title text-center text-capitalize pb-md-5 pb-4">专业的技师团队</h3>
 			</div>
 			<div class="row">
 				<div class="col-lg-3 col-sm-6 team-grids">
@@ -257,137 +256,26 @@
 						<p>Creative Director</p>
 						<ul class="social-iconsv2 agileinfo">
 							<li>
-								<a href="#">
-									<i class="fab fa-facebook-f"></i>
-								</a>
 							</li>
 							<li>
-								<a href="#">
-									<i class="fab fa-twitter"></i>
-								</a>
 							</li>
 							<li>
-								<a href="#">
-									<i class="fab fa-google-plus-g"></i>
-								</a>
 							</li>
 							<li>
-								<a href="#">
-									<i class="fab fa-linkedin-in"></i>
-								</a>
 							</li>
 						</ul>
 					</div>
 					<!-- //team text -->
 				</div>
-				<div class="col-lg-3 col-sm-6 team-grids mt-sm-0 mt-5">
-					<div class="team-effect">
-						<img src="${PATH}/pages/images/t3.jpg" alt="img" class="img-responsive">
-					</div>
-					<!-- team text -->
-					<div class="footerv2-w3ls mt-3">
-						<h4>Thomson Doe</h4>
-						<p>Chairman</p>
-						<ul class="social-iconsv2 agileinfo">
-							<li>
-								<a href="#">
-									<i class="fab fa-facebook-f"></i>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="fab fa-twitter"></i>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="fab fa-google-plus-g"></i>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="fab fa-linkedin-in"></i>
-								</a>
-							</li>
-						</ul>
-					</div>
-					<!-- //team text -->
-				</div>
-				<div class="col-lg-3 col-sm-6 team-grids mt-lg-0 mt-5">
-					<div class="team-effect">
-						<img src="${PATH}/pages/images/t2.jpg" alt="img" class="img-responsive">
-					</div>
-					<!-- team text -->
-					<div class="footerv2-w3ls mt-3">
-						<h4>Smith Kevin</h4>
-						<p>Executive Manager</p>
-						<ul class="social-iconsv2 agileinfo">
-							<li>
-								<a href="#">
-									<i class="fab fa-facebook-f"></i>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="fab fa-twitter"></i>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="fab fa-google-plus-g"></i>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="fab fa-linkedin-in"></i>
-								</a>
-							</li>
-						</ul>
-					</div>
-					<!-- //team text -->
-				</div>
-				<div class="col-lg-3 col-sm-6 team-grids mt-lg-0 mt-5">
-					<div class="team-effect">
-						<img src="${PATH}/pages/images/t4.jpg" alt="img" class="img-responsive">
-					</div>
-					<!-- team text -->
-					<div class="footerv2-w3ls mt-3">
-						<h4>Laura Hill</h4>
-						<p>HR Manager</p>
-						<ul class="social-iconsv2 agileinfo">
-							<li>
-								<a href="#">
-									<i class="fab fa-facebook-f"></i>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="fab fa-twitter"></i>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="fab fa-google-plus-g"></i>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="fab fa-linkedin-in"></i>
-								</a>
-							</li>
-						</ul>
-					</div>
-					<!-- //team text -->
-				</div>
+				
 			</div>
 		</div>
 	</section>
 	<!-- //team -->
-	<div class="tlinks">Collect from <a href="http://www.cssmoban.com/" >建站模板</a></div>
 	<!-- gallery -->
 	<div class="gallery  py-md-5 py-3" id="gallery">
 		<div class="container">
-			<h3 class="w3ls-title text-center text-capitalize py-md-4 py-3">gallery</h3>
+			<h3 class="w3ls-title text-center text-capitalize py-md-4 py-3">洗衣间</h3>
 			<div class="gallery_gds row pt-md-5 pt-3">
 				<div class="col-4 gal-w3l">
 					<div class="agileits-img">
@@ -463,11 +351,11 @@
 	<!-- pricing -->
 	<section class="wthree-row py-md-5 pt-sm-5" id="pricing">
 		<div class="container py-md-5 py-3">
-			<h3 class="w3ls-title text-center text-capitalize pb-md-5 pb-4">pricing plans</h3>
+			<h3 class="w3ls-title text-center text-capitalize pb-md-5 pb-4">服务选择</h3>
 			<div class="row pb-5">
 				<div class="col-lg-3 col-md-6 text-center  pb-0 pt-3 px-3 agile-pricegrid">
 					<div class="bg-price py-sm-3 rounded-top text-center">
-						<h4>Basic</h4>
+						<h4>普通洗衣</h4>
 						<span class="mx-auto my-2"></span>
 					</div>
 					<div class="p-3">
@@ -554,7 +442,7 @@
 	</section>
 	<!-- //pricing -->
 	<!-- testimonials -->
-	<section class="wthree-row py-5 testi-agile" id="testimonials">
+	<!-- <section class="wthree-row py-5 testi-agile" id="testimonials">
 		<div class="container py-md-5 py-3">
 			<h3 class="w3ls-title text-center text-capitalize pb-md-5 pb-4">testimonials</h3>
 			<div class="w3_testimonials_grids w3_testimonials_grids">
@@ -603,27 +491,27 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</section> -->
 	<!-- //testimonials -->
 	<!-- contact -->
 	<section class="wthree-row py-5 w3-contact" id="contact">
 		<div class="container py-md-5">
-			<h3 class="w3ls-title text-center text-capitalize pb-md-5 pb-4">contact us</h3>
+			<h3 class="w3ls-title text-center text-capitalize pb-md-5 pb-4">联系我们</h3>
 			<div class="row contact-form py-3">
 				<div class="col-lg-6 wthree-form-left">
 					<!-- contact form grid -->
 					<div class="contact-top1">
 						<form action="#" method="get" class="f-color">
 							<div class="form-group">
-								<label for="contactusername">Name</label>
+								<label for="contactusername">称呼</label>
 								<input type="text" class="form-control" id="contactusername" required>
 							</div>
 							<div class="form-group">
-								<label for="contactemail">Email</label>
+								<label for="contactemail">邮箱</label>
 								<input type="email" class="form-control" id="contactemail" required>
 							</div>
 							<div class="form-group">
-								<label for="contactcomment">Your Message</label>
+								<label for="contactcomment">留言</label>
 								<textarea class="form-control" rows="5" id="contactcomment" required></textarea>
 							</div>
 							<button type="submit" class="btn btn-info btn-block">Submit</button>
@@ -633,7 +521,7 @@
 				</div>
 				<!-- contact details -->
 				<!-- contact map grid -->
-				<div class="col-lg-6  mt-lg-0 mt-5 map contact-right">
+				<!-- <div class="col-lg-6  mt-lg-0 mt-5 map contact-right">
 					<iframe class="h-50" src="" allowfullscreen></iframe>
 					<div class="address mt-3">
 						<h5 class="pb-3 text-capitalize">Contact info</h5>
@@ -647,7 +535,7 @@
 								</p>
 						</address>
 					</div>
-				</div>
+				</div> -->
 				<!--//contact map grid ends here-->
 			</div>
 			<!-- //contact details container -->
@@ -658,13 +546,12 @@
 	<section class="wthree-row py-sm-5 py-3 slide-bg bg-dark">
 		<div class="container py-md-5 py-3">
 			<div class="py-lg-5 bg-pricemain">
-				<h3 class="agile-title text-capitalize text-white">go laundry!</h3>
+				<h3 class="agile-title text-capitalize text-white">去洗衣服！</h3>
 				<span class="w3-line"></span>
-				<h5 class="agile-title text-capitalize pt-4">trust us, we save your time.</h5>
+				<h5 class="agile-title text-capitalize pt-4">相信我们，我们可以节省您的时间！</h5>
 				<p class="text-light py-sm-4 py-2">Aliquam ac est vel nisl condimentum interdum vel eget enim. Curabitur mattis orci sed leo mattis, nec maximus nibh faucibus.
 					Mauris et justo vel nibh rhoncus venenatis. Nullal condimentum interdum vel eget enim. Curabitur mattis orci sed le.
 				</p>
-				<a href="#" class="text-uppercase serv_link align-self-center bg-light btn px-4">read more</a>
 			</div>
 		</div>
 	</section>
@@ -674,7 +561,7 @@
 		<div class="container">
 			<!-- footer grid top -->
 			<div class="footerv2-w3ls text-center">
-				<h4 class="w3ls-title text-capitalize pb-3">socialize with us</h4>
+				<h4 class="w3ls-title text-capitalize pb-3">关注我们</h4>
 				<ul class="social-iconsv2 agileinfo mt-3">
 					<li>
 						<a href="#">
@@ -708,11 +595,6 @@
 					<p>+456 123 7890</p>
 				</div>
 			</div>
-			<!-- copyright -->
-			<div class="cpy-right text-center pt-5">
-				<p>Copyright &copy; 2018.Company name All rights reserved.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
-			</div>
-			<!-- //copyright -->
 		</div>
 	</footer>
 	<!-- //footer -->

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hp.blogs.mapper.BlogsMapper">
+
+    <!-- 开启二级缓存 -->
+    <!-- <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/> -->
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hp.blogs.beans.Blogs">
+        <id column="blog_id" property="blogId" />
+        <result column="techn_id" property="technId" />
+        <result column="blog_text" property="blogText" />
+        <result column="praise_int" property="praiseInt" />
+        <result column="create_time" property="createTime" />
+        <result column="is_show" property="isShow" />
+        <result column="is_del" property="isDel" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        blog_id,  techn_id, blog_text, praise_int, create_time, is_show, is_del
+    </sql>
+
+</mapper>

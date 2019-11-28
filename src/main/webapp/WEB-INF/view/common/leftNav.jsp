@@ -23,7 +23,7 @@
                     <li>
                         <a class="sidebar-sub-toggle"><i class="ti-bar-chart-alt"></i>积分管理<span class="sidebar-collapse-icon ti-angle-down"></span></a>
                         <ul>
-                            <li><a href="${PATH}/foodMenus/toAddFoodMenusPage">客户积分</a></li>
+                            <li><a href="${PATH}/rechargeCust/toCustIntegralPage">客户积分</a></li>
                             <li><a href="${PATH}/cashTechn/toTechnIntegralPage">技师积分</a></li>
                               
                         </ul>

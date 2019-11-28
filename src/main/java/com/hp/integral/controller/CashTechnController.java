@@ -61,7 +61,7 @@ public class CashTechnController {
 		CashTechn cash = new CashTechn();
 		Integer id = (Integer) map.get("cashId");
 		cash.setCashId(id);
-		cash.setCashState("300");
+		cash.setCashState("200");
 		boolean b = cashSer.updateById(cash);
 		if(b) {
 			return Msg.success().add("msg","成功！");
@@ -75,9 +75,21 @@ public class CashTechnController {
 	@ResponseBody
 	public Msg rejectCash(@RequestBody Map map) {
 		Integer technId = (Integer) map.get("technId");
+		Integer cashIntegral = (Integer) map.get("cashIntegral");
+		
 		Technician technician = technService.selectById(technId);
+		
+		Integer old = technician.getTechnIntegral();	//得到技师的积分情况(避免技师接单了更新了积分)
+		Technician errorTechn = new Technician();		//更新技师积分
+		errorTechn.setTechnIntegral(old+cashIntegral);
+		errorTechn.setTechnicianId(technId);
+		boolean rollBACK = technService.updateById(errorTechn);	//对积分进行回滚
+		if(!rollBACK) {
+			return Msg.fail().add("msg", "操作失败！原因积分回滚失败！");
+		}
 		EmailUntils untils = new EmailUntils();
 		untils.sendEmailsCurrency(technician.getTechnEmail(), "error", map);
+		
 		CashTechn cash = new CashTechn();
 		Integer id = (Integer) map.get("cashId");
 		cash.setCashId(id);

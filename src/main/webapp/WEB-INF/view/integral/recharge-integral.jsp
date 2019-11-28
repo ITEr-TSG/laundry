@@ -64,7 +64,7 @@ input[type="number"] {
 							<div class="page-title">
 								<ol class="breadcrumb text-right">
 									<li><a href="#">导航</a></li>
-									<li class="active">积分提现</li>
+									<li class="active">积分充值</li>
 								</ol>
 							</div>
 						</div>
@@ -75,47 +75,29 @@ input[type="number"] {
 				<div class="main-content">
 					<div class="row">
 						<div class="card">
-							<form class="layui-form" id="kwCashForm">
+							<form class="layui-form" id="kwRechargeForm">
 								<div class="col-lg-6">
 									<div class="layui-form-item">
-										<label class="layui-form-label">技师名</label>
+										<label class="layui-form-label">客户名</label>
 										<div class="layui-input-block">
 											<input type="text" name="name"  placeholder="请输入" autocomplete="off"
 												class="layui-input">
 										</div>
 									</div>
 									<div class="layui-form-item">
-										<label class="layui-form-label" style="width: 100px;margin-right: 10px">提现积分</label>
-										<div class="layui-input-inline">
-											<input type="number" placeholder="请输入" name="min_integral"
-												autocomplete="off" class="layui-input">
-										</div>
-										<div class="layui-form-mid">-</div>
-										<div class="layui-input-inline">
-											<input type="number" placeholder="请输入" name="max_integral"
-												autocomplete="off" class="layui-input">
-										</div>
-									</div>
-									 <div class="layui-form-item">
 									    <label class="layui-form-label">状态</label>
 									    <div class="layui-input-block">
-									      <select name="cashState">
+									      <select name="rechargeState">
 									        <option value="0">---请选择---</option>
-									        <option value="100">申请中</option>
+									        <option value="100">同意</option>
 									        <option value="200">驳回</option>
-									        <option value="300">同意</option>
 									      </select>
 									    </div>
 									  </div>
+									
 								</div>
 								<div class="col-lg-6">
-									<div class="layui-form-item">
-										<label class="layui-form-label">账号</label>
-										<div class="layui-input-block">
-											<input type="text" name="cashAccount"  placeholder="请输入" autocomplete="off"
-												class="layui-input">
-										</div>
-									</div>
+									 
 									<div class="layui-form-item">
 										<label class="layui-form-label range-label">日期</label>
 										<div class="layui-input-inline">
@@ -129,15 +111,30 @@ input[type="number"] {
 										</div>
 									</div>
 									<div class="layui-form-item">
-									    <label class="layui-form-label">分类</label>
-									    <div class="layui-input-block">
-									      <select name="cashWay">
-									        <option value="0">---请选择---</option>
-									        <option value="微信">微信</option>
-									        <option value="支付宝">支付宝</option>
-									      </select>
-									    </div>
-									  </div>
+										<label class="layui-form-label" style="width: 100px;margin-right: 10px">充值积分</label>
+										<div class="layui-input-inline">
+											<input type="number" placeholder="请输入" name="min_integral"
+												autocomplete="off" class="layui-input">
+										</div>
+										<div class="layui-form-mid">-</div>
+										<div class="layui-input-inline">
+											<input type="number" placeholder="请输入" name="max_integral"
+												autocomplete="off" class="layui-input">
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label class="layui-form-label" style="width: 100px;margin-right: 10px">充值金额</label>
+										<div class="layui-input-inline">
+											<input type="number" placeholder="请输入" name="start_money"
+												autocomplete="off" class="layui-input">
+										</div>
+										<div class="layui-form-mid">-</div>
+										<div class="layui-input-inline">
+											<input type="number" placeholder="请输入" name="end_money"
+												autocomplete="off" class="layui-input">
+										</div>
+									</div>
+									
 								</div>
 								
 								<div class="layui-form-item">
@@ -153,13 +150,13 @@ input[type="number"] {
 						<div class="col-lg-12">
 							<div class="card">
 								<div class="card-header">
-									<h2>提现列表</h2><br>
+									<h2>充值列表</h2><br>
 									<button class="layui-btn layui-btn-danger" type="button" id="delByIds">选中删除</button>
 								</div>
 								<div class="card-body">
-									<table id="cashListTb"
+									<table id="rechargeListTb"
 										class="table table-responsive table-hover"
-										lay-filter="cashListTbFilter">
+										lay-filter="rechargeListTbFilter">
 
 									</table>
 								</div>
@@ -178,24 +175,20 @@ input[type="number"] {
 	</div>
 	<!-- /# content wrap -->
 	<!-- 查看模态框 -->
-	<div style="display: none;" id="detailTechnModal" align="center">
+	<div style="display: none;" id="detailCustModal" align="center">
 		<div class="layui-card">
 			<div class="layui-card-body">
-				<h4>技师电话：</h4>
-				<div id="technPhon"></div>
+				<h4>客户名：</h4>
+				<div id="custNameDiv"></div>
 			</div>
 			<div class="layui-card-body" >
-				<h4>技师昵称：</h4>
-				<div id="technNick"></div>
+				<h4>客户昵称：</h4>
+				<div id="custNickDiv"></div>
 			</div>
 			<div class="layui-card-body">
-				<h4>技师当前积分：</h4>
-				<div id="technNow"></div>
+				<h4>当前积分：</h4>
+				<div id="custNowDiv"></div>
 			</div>
-			<div class="thumbnail"  style="width: 205px;height: 320px">
-                   <p>技师照片</p>
-               <img id="technImg"  style="width: 200px;height: 283px" alt="照片" style="width:100%">
-            </div>
 		</div>
 	</div>
 	<script src="${PATH}/static/assets/js/lib/jquery.min.js"></script>
@@ -216,19 +209,19 @@ input[type="number"] {
 			renderTb();
 		});
 		function renderTb() {
-			var data = $("#kwCashForm").serializeArray();
+			var data = $("#kwRechargeForm").serializeArray();
 			layui.use(['table','util'], function() {
 				var table = layui.table
 				,util = layui.util;
 				//第一个实例
 				table.render({
-					elem : '#cashListTb',
+					elem : '#rechargeListTb',
 					height : 312,
-					url : '${PATH}/cashTechn/getCashList',
+					url : '${PATH}/rechargeCust/getRechargeList',
 					text : {
-						none : '未找到提现信息'
+						none : '未找到充值信息'
 					},
-					id:"cashListTbId",
+					id:"rechargeListTbId",
 					skin : 'line' ,
 					contentType: "application/json",//必须指定，否则会报415错误
 				    dataType : 'json',
@@ -240,31 +233,31 @@ input[type="number"] {
 					},
 					cols : [ [ //表头
 					{
-						field : 'cashId',
+						field : 'rechargeId',
 						title : '#',
 						type:"checkbox",
 						rowspan:2,
 						align : "center"
 					}, {
-						title : '账号及金额',
-						colspan:3,
+						field : 'rechargeMoney',
+						title : '金额（￥）',
+						rowspan:2,
+						style:"color: red;",
 						align : "center"
 					},{
 						title : '积分',
-						colspan:2,
+						colspan:3,
 						align : "center"
 					},{
-						field : 'cashState',
+						field : 'rechargeState',
 						title : '状态',
 						rowspan:2,
 						style:"color: orange;",
 						align : "center",
 						templet: function(d){
-							if(d.cashState=="100"){
-								return "申请中"
-							}else if(d.cashState=="200"){
+							if(d.rechargeState=="200"){
 								return "驳回"
-							}else{
+							}else {
 								return "同意"
 							}
 					      }
@@ -282,30 +275,18 @@ input[type="number"] {
 						align : "center"
 					}],[
 						{
-							field : 'cashWay',
-							title : '方式',
-							style:"color: #1E9FFF;",
-							align : "center"
-						},
-						{
-							field : 'cashAccount',
-							title : '账号',
-							align : "center"
-						},
-						{
-							field : 'cashMoney',
-							title : '金额（￥）',
-							style:"color: red;",
-							align : "center"
-						},
-						{
 							field : 'oldIntegral',
-							title : '提现前',
+							title : '充值前',
 							align : "center"
 						},
 						{
-							field : 'cashIntegral',
-							title : '提现量',
+							field : 'rechargeIntegral',
+							title : '充值量',
+							align : "center"
+						},
+						{
+							field : 'newIntegral',
+							title : '充值后',
 							align : "center"
 						}
 						
@@ -321,21 +302,20 @@ input[type="number"] {
 						};
 					}
 				});
-				table.on('tool(cashListTbFilter)', function(obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+				table.on('tool(rechargeListTbFilter)', function(obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
 					var data = obj.data; //获得当前行数据
 					var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 					var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
 					if (layEvent === 'detail') { //查看
-						var technId = data.technId
+						var custId = data.rechargeCustId
 						$.ajax({
-							url:"${PATH}/technician/getById/"+technId,
+							url:"${PATH}/cust/getById/"+custId,
 							method:"get",
 							success:function(res){
 								if(res.code==100){
-									$("#technNow").html(res.extend.techn.technIntegral);
-									$("#technNick").html(res.extend.techn.technNick);
-									$("#technPhon").html(res.extend.techn.technPhone);
-									$("#technImg").attr("src",res.extend.techn.technPhoto);
+									$("#custNowDiv").html(res.extend.cust.custIntegral);
+									$("#custNickDiv").html(res.extend.cust.custNick);
+									$("#custNameDiv").html(res.extend.cust.custName);
 								}
 							},error:function(){
 								layui.layer.msg("系统错误！",{icon:5})
@@ -343,51 +323,26 @@ input[type="number"] {
 							
 						});
 						var index = layer.open({
-							title : '提现人信息',
+							title : '充值人信息',
 							fix : true,
 							resize : false,
 							move : false,
-							area: ['600px','620px'],
+							area: ['600px','320px'],
 							zIndex : 500,
 							shadeClose : true,
 							shade : 0.4,
 							type : 1,
-							content : $('#detailTechnModal')
+							content : $('#detailCustModal')
 						});
-					} else if(layEvent === 'agree'){
+					}else if(layEvent === 'reject'){
 						var data = data
-						var flag = data.cashState
-						if(flag!="100"){
-							layer.msg("当前申请已经处理",{icon:5})
+						var flag = data.rechargeState
+						if(flag=="200"){
+							layer.msg("当前客户已经驳回",{icon:5})
 							return;
 						}
 						$.ajax({
-							url:"${PATH}/cashTechn/agreeCash",
-							method:"post",
-							contentType: "application/json",//必须指定，否则会报415错误
-					        dataType : 'json',
-							data:JSON.stringify(data),
-							success:function(res){
-								if(res.code==100){
-									layer.msg(res.extend.msg,{icon:6},function(){
-										renderTb();
-									})
-								}else{
-									layer.msg(res.extend.msg,{icon:5})
-								}
-							},error:function(){
-								layer.msg("系统错误！",{icon:5})
-							}
-						});
-					}  else if(layEvent === 'reject'){
-						var data = data
-						var flag = data.cashState
-						if(flag!="100"){
-							layer.msg("当前申请已经处理",{icon:5})
-							return;
-						}
-						$.ajax({
-							url:"${PATH}/cashTechn/rejectCash",
+							url:"${PATH}/rechargeCust/rejectRecharge",
 							method:"post",
 							contentType: "application/json",//必须指定，否则会报415错误
 					        dataType : 'json',
@@ -434,18 +389,19 @@ input[type="number"] {
 				var table = layui.table
 				,layer = layui.layer;
 				layer.confirm('真的删除行么', function(index){
-					var checkStatus = table.checkStatus('cashListTbId');
+					var checkStatus = table.checkStatus('rechargeListTbId');
 					var datas = checkStatus.data
 					var ids = new Array();
 					$(datas).each(function(){
-						ids.push($(this)[0].cashId);
+						ids.push($(this)[0].rechargeId);
 					})
+					console.log(ids)
 					if(ids.length==0){
 						layer.msg("请选择要删除的数据！",{icon:5});
 						return;
 					}
 					$.ajax({
-						url:"${PATH}/cashTechn/delCashByIds",
+						url:"${PATH}/rechargeCust/delRechargeByIds",
 						method:"POST",
 						contentType: "application/json",//必须指定，否则会报415错误
 					    dataType : 'json',
@@ -475,7 +431,6 @@ input[type="number"] {
 <script type="text/html" id="barDemo">
 <div align="center">
 <button type="button" class="btn btn-info btn-xs btn-outline" lay-event="detail">查看</button>
-<button type="button" class="btn btn-pink btn-xs btn-outline" lay-event="agree">同意</button>
 <button type="button" class="btn btn-warning btn-xs btn-outline" lay-event="reject">驳回</button>
 </div>
 </script>

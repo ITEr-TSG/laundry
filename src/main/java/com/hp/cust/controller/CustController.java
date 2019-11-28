@@ -27,6 +27,8 @@ import com.hp.code.beans.RegiterCode;
 import com.hp.code.service.RegiterCodeService;
 import com.hp.cust.beans.Cust;
 import com.hp.cust.service.CustService;
+import com.hp.integral.beans.RechargeCust;
+import com.hp.integral.service.RechargeCustService;
 import com.hp.utils.AnalysisKeyWordsListUtils;
 import com.hp.utils.Msg;
 
@@ -47,6 +49,19 @@ public class CustController {
 	
 	@Autowired
 	private CustService custSer;		//客户
+	
+	@Autowired
+	private RechargeCustService rechargeSer;
+	
+	/**
+	 * 根据id查询客户
+	 * */
+	@RequestMapping(value="/getById/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public Msg getById(@PathVariable("id")Integer id) {
+		Cust cust = custSer.selectById(id);
+		return Msg.success().add("cust", cust);
+	}
 	
 	/**
 	 * 忘记密码
@@ -117,13 +132,21 @@ public class CustController {
 	 * */
 	@RequestMapping(value="/recharge",method=RequestMethod.GET)
 	@ResponseBody
-	public Msg recharge(@RequestParam("id")Integer id,@RequestParam("integral")Integer integral) {
+	public Msg recharge(@RequestParam("id")Integer id,@RequestParam("integral")Integer integral
+			,@RequestParam("money")Integer money) {
 		Cust cust = custSer.selectById(id);
 		Integer old = cust.getCustIntegral();
 		Cust entity = new Cust();
 		entity.setCustId(id);
-		
 		entity.setCustIntegral(old+integral);
+		RechargeCust recharge = new RechargeCust();
+		recharge.setRechargeCustId(id);
+		recharge.setRechargeState("100");
+		recharge.setOldIntegral(old);
+		recharge.setRechargeIntegral(integral);
+		recharge.setNewIntegral(old+integral);
+		recharge.setRechargeMoney(money);
+		rechargeSer.insert(recharge);		//充值记录
 		boolean b = custSer.updateById(entity);
 		if(!b) {
 			return Msg.fail().add("msg","充值失败！");

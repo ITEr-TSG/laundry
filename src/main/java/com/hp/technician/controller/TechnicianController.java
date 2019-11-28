@@ -171,7 +171,6 @@ public class TechnicianController {
 			req.getSession().setAttribute("errorTechn", "用户名或密码错误");
 			return "redirect:/pages/login.jsp";	
 		}
-		System.out.println(one);
 		req.getSession().setAttribute("nick", one.getTechnNick());
 		req.getSession().setAttribute("phone", one.getTechnPhone());
 		req.getSession().setAttribute("photo", one.getTechnPhoto());
