@@ -62,6 +62,45 @@ public class TechnicianController {
 	private TechnMidSortService midSer;			//中间表
 	
 	/**
+	 * 前台页面展示
+	 * @return 
+	 * */
+	@RequestMapping(value="/getTechnByShow",method=RequestMethod.GET)
+	@ResponseBody
+	public List<Map<String, Object>> getTechnByShow() {
+		EntityWrapper<Technician> wrapper = new EntityWrapper<>();
+		wrapper.orderBy("techn_integral", false);
+		Page<Map<String, Object>> page = technSer.selectMapsPage(new Page<>(1, 4), wrapper);
+		return page.getRecords();
+	}
+	
+	/**
+	 * 前端获取所有的技师
+	 * @return 
+	 * */
+	@RequestMapping(value="/getTechnByCust",method=RequestMethod.POST)
+	@ResponseBody
+	public List<Technician> getTechnByCust(@RequestBody Map map) {
+		String sort = (String) map.get("data");
+		EntityWrapper<Technician> wrapper = new EntityWrapper<>();
+		if(!sort.equals("")) {
+			Integer sortId = Integer.parseInt(sort);
+			EntityWrapper<TechnMidSort> mid = new EntityWrapper<>();
+			mid.eq("sort_id",sortId);
+			List<TechnMidSort> midList = midSer.selectList(mid);
+			
+			ArrayList<Integer> technIdList = new ArrayList<>();
+			for (TechnMidSort technMidSort : midList) {
+				technIdList.add(technMidSort.getTechnId());
+			}
+			wrapper.in("technician_id", technIdList);
+		}
+		wrapper.orderBy("techn_integral", false);
+		List<Technician> list = technSer.selectList(wrapper);
+		return list;
+	}
+	
+	/**
 	 * 根据id查询技师
 	 * */
 	@RequestMapping(value="/getById/{id}",method=RequestMethod.GET)
@@ -397,6 +436,11 @@ public class TechnicianController {
 	@RequestMapping(value="/toTechnListPage",method=RequestMethod.GET)
 	public String toTechnListPage() {
 		return "/technician/list-techn";
+	}
+	//前端跳转到查询所有技师页面
+	@RequestMapping(value="/getAllTechnByCust",method=RequestMethod.GET)
+	public String getAllTechnByCust() {
+		return "forward:/pages/techns/list-techn.jsp";
 	}
 	
 }

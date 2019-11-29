@@ -31,15 +31,16 @@
                     <li>
                         <a class="sidebar-sub-toggle"><i class="ti-crown"></i>订单管理<span class="sidebar-collapse-icon ti-angle-down"></span></a>
                         <ul>
-                            <li><a href="${PATH}/newFood/toAddNewPage">订单条目</a></li>
+                            <li><a href="${PATH}/orderItem/toAddOrderItemPage">添加条目</a></li>
+                            <li><a href="${PATH}/orderItem/toOrderItemListPage">订单条目</a></li>
                             <li><a href="${PATH}/newFood/toNewFoodListPage">订单中心</a></li>
                         </ul>
                     </li>
                     <li>
                         <a class="sidebar-sub-toggle"><i class="ti-timer"></i>博客管理<span class="sidebar-collapse-icon ti-angle-down"></span></a>
                         <ul>
-                            <li><a href="${PATH}/soonFood/toAddSoonPage">官方博客</a></li>
-                            <li><a href="${PATH}/soonFood/toSoonFoodListPage">技师博客</a></li>
+                            <li><a href="${PATH}/blogs/toTechnBlogsListPage">技师博客</a></li>
+                            <li><a href="${PATH}/blogsCollect/toCollectPage">点赞管理</a></li>
                         </ul>
                     </li>
                     <li>

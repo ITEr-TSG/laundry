@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hp.order.mapper.OrderItemMapper">
+
+    <!-- 开启二级缓存 -->
+    <!-- <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/> -->
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hp.order.beans.OrderItem">
+        <id column="item_id" property="itemId" />
+        <result column="item_name" property="itemName" />
+        <result column="item_price" property="itemPrice" />
+        <result column="desc_one" property="descOne" />
+        <result column="desc_two" property="descTwo" />
+        <result column="desc_three" property="descThree" />
+        <result column="desc_four" property="descFour" />
+        <result column="desc_five" property="descFive" />
+        <result column="item_state" property="itemState" />
+        <result column="create_time" property="createTime" />
+        <result column="is_del" property="isDel" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        item_id, item_name, item_price, desc_one, desc_two, desc_three, desc_four, desc_five, item_state, create_time, is_del
+    </sql>
+
+</mapper>

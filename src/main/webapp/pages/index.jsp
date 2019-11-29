@@ -35,6 +35,8 @@
 	<!--//webfonts-->
 	<link href="${PATH}/static/layui/css/layui.css" rel='stylesheet'
 	type='text/css' />
+	<script src="${PATH}/static/vue/vue.min.js"></script>
+<script src="${PATH}/static/vue/vue-resource.min.js"></script>
 </head>
 
 <body>
@@ -69,7 +71,7 @@
 							  </li>
 						
 						<li class="layui-nav-item">
-							<a href="${PATH}/blog/getAllBlogs">博客中心</a>
+							<a href="${PATH}/pages/blogs/whisper.jsp">博客中心</a>
 						</li>
 					</ul>
 					<ul class="layui-nav">
@@ -106,6 +108,9 @@
 											</dd>
 											<dd>
 												<a class="dropdown-item" href="${PATH}/blogs/writeBlog/${sessionScope.id}/${sessionScope.phone}">编写博客</a>
+											</dd>
+											<dd>
+												<a class="dropdown-item" href="${PATH}/blogs/getBlogsByTechn/${sessionScope.id}/${sessionScope.phone}">我的博客</a>
 											</dd>
 											<dd>
 												<a class="dropdown-item" href="${PATH}/cust/loginOut">退出登录</a>
@@ -171,6 +176,7 @@
 	</section>
 	<!-- //about -->
 	<!--services-->
+	
 	<div class="agileits-services py-md-5 py-3" id="services">
 		<div class="container">
 			<h3 class="w3ls-title text-center text-capitalize pb-md-5 pb-4">我们所做的</h3>
@@ -201,6 +207,7 @@
 	</div>
 	<!-- //services-->
 	<!-- stats -->
+	<div id="showDiv">
 	<section class="agile_stats text-center py-5">
 		<div class="container pt-sm-5">
 			<div class="stats_agile mb-sm-5 mb-3">
@@ -245,29 +252,28 @@
 			<div class="py-md-5 py-3 bg-pricemain text-center">
 				<h3 class="w3ls-title text-center text-capitalize pb-md-5 pb-4">专业的技师团队</h3>
 			</div>
-			<div class="row">
-				<div class="col-lg-3 col-sm-6 team-grids">
+			<div class="row" >
+			
+				<div class="col-lg-3 col-sm-6 team-grids" v-for="item in techns">
 					<div class="team-effect">
-						<img src="${PATH}/pages/images/t1.jpg" alt="img" class="img-responsive">
+						<img :src="item.technPhoto" alt="照片" class="img-responsive">
 					</div>
 					<!-- team text -->
 					<div class="footerv2-w3ls mt-3">
-						<h4>John Smith</h4>
-						<p>Creative Director</p>
+						<h4 v-text = 'item.technRealName'></h4>
+						<p v-text = 'item.technEmail'></p>
 						<ul class="social-iconsv2 agileinfo">
-							<li>
-							</li>
-							<li>
-							</li>
-							<li>
-							</li>
-							<li>
-							</li>
+							
 						</ul>
 					</div>
 					<!-- //team text -->
 				</div>
 				
+				
+				
+				<div class="col-lg-12 col-sm-6 team-grids" align="center">
+					<blockquote class="layui-elem-quote"><a href="${PATH}/technician/getAllTechnByCust" type="button" class="layui-btn  layui-btn-primary layui-btn-fluid">查看全部技师<i class="layui-icon layui-icon-next"></i></a></blockquote>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -353,6 +359,9 @@
 		<div class="container py-md-5 py-3">
 			<h3 class="w3ls-title text-center text-capitalize pb-md-5 pb-4">服务选择</h3>
 			<div class="row pb-5">
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+				  <legend>信息流 - 滚动加载</legend>
+				</fieldset>	
 				<div class="col-lg-3 col-md-6 text-center  pb-0 pt-3 px-3 agile-pricegrid">
 					<div class="bg-price py-sm-3 rounded-top text-center">
 						<h4>普通洗衣</h4>
@@ -437,6 +446,8 @@
 						<button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" aria-pressed="false" data-target="#exampleModal">Get Started</button>
 					</div>
 				</div>
+				
+				
 			</div>
 		</div>
 	</section>
@@ -494,6 +505,8 @@
 	</section> -->
 	<!-- //testimonials -->
 	<!-- contact -->
+	</div>
+	
 	<section class="wthree-row py-5 w3-contact" id="contact">
 		<div class="container py-md-5">
 			<h3 class="w3ls-title text-center text-capitalize pb-md-5 pb-4">联系我们</h3>
@@ -776,5 +789,25 @@
 	<script src="${PATH}/static/layui/layui.all.js"></script>
 	<!-- //Bootstrap Core JavaScript -->
 </body>
+<script type="text/javascript">
+	
 
+
+
+	var showDiv = new Vue({
+		el:"#showDiv",
+		data:{
+			techns:[],
+		},created: function () {
+			this.$http.get("${PATH}/technician/getTechnByShow").then(function(response){
+				console.log(response.body)
+				//成功
+				this.techns=response.body;
+			},function(response) {
+				//错误
+				console.log("查询反馈分类时，出现系统错误！")
+			});
+		}
+	});
+</script>
 </html>

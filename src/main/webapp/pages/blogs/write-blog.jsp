@@ -77,13 +77,12 @@ input[type="number"] {
 				<div class="layui-col-md9" style="margin-bottom: 150px">
 					<h3 align="center" style="padding-top: 10px">博客编写</h3>
 					<br>
-					
 					  <input type="hidden" id="technId_blog" value="${techn.technicianId}">
-					  
 					  <div class="layui-form-item" id="writeDiv">
-					    
+					     
 					  </div>
 					  <div class="layui-form">
+						  <input type="text" id="blig_title" placeholder="请输入标题" autocomplete="off" class="layui-input">
 						  <input type="radio"  checked="checked" name="state" value="展示" title="展示">
 						  <input type="radio" name="state" value="隐藏" title="隐藏" ><br><br>
 					     
@@ -197,6 +196,11 @@ input[type="number"] {
 	editor.txt.html('<p>开始编写吧！</p>')
 	 document.getElementById('addBlogBtn').addEventListener('click', function () {
 		 var id = $("#technId_blog").val();
+		 var title = $("#blig_title").val();
+		 if(title==""){
+			 layui.layer.msg("请给文章写上标题！",{icon:5});
+			 return;
+		 }
 		 var blogState = $('input[name="state"]:checked').val();
         var blog = editor.txt.html()
         $.ajax({
@@ -204,7 +208,7 @@ input[type="number"] {
         	method:"POST",
         	contentType: "application/json",//必须指定，否则会报415错误
             dataType : 'json',
-        	data:JSON.stringify({id:id,text:blog,state:blogState}),
+        	data:JSON.stringify({id:id,text:blog,state:blogState,title:title}),
         	success:function(res){
         		if(res.code==100){
         			layui.layer.msg(res.extend.msg,{icon:6},function(){

@@ -36,6 +36,10 @@ public class Blogs extends Model<Blogs> {
      */
     private Integer technId;
     /**
+     * 博客的标题
+     */
+    private String blogTitle;
+    /**
      * 博客的内容
      */
     private String blogText;
@@ -59,6 +63,8 @@ public class Blogs extends Model<Blogs> {
     @TableLogic
     private Integer isDel;
 
+    @TableField(exist=false)
+    private String technName;
 
     public Integer getBlogId() {
         return blogId;
@@ -121,10 +127,29 @@ public class Blogs extends Model<Blogs> {
         return this.blogId;
     }
 
+	public String getBlogTitle() {
+		return blogTitle;
+	}
+
+	public void setBlogTitle(String blogTitle) {
+		this.blogTitle = blogTitle;
+	}
+
+	public String getTechnName() {
+		return technName;
+	}
+
+	public void setTechnName(String technName) {
+		this.technName = technName;
+	}
+
 	@Override
 	public String toString() {
-		return "Blogs [blogId=" + blogId + ", technId=" + technId + ", blogText=" + blogText + ", praiseInt="
-				+ praiseInt + ", createTime=" + createTime + ", isShow=" + isShow + ", isDel=" + isDel + "]";
+		return "Blogs [blogId=" + blogId + ", technId=" + technId + ", blogTitle=" + blogTitle + ", blogText="
+				+ blogText + ", praiseInt=" + praiseInt + ", createTime=" + createTime + ", isShow=" + isShow
+				+ ", isDel=" + isDel + ", technName=" + technName + "]";
 	}
+
+
     
 }

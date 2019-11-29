@@ -3,6 +3,7 @@ package com.hp.blogs.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,64 @@ public class BlogsController {
 	private TechnicianService technSer;	//技师
 	
 	/**
+	 * 后台根据id查询博客
+	 * */
+	@RequestMapping(value="/getById/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public Msg getById(@PathVariable("id")Integer id) {
+		Blogs blog = blogSer.selectById(id);
+		return Msg.success().add("blog",blog);
+	}
+	
+	/**
+	 * 后台查询所有博客
+	 * @return 
+	 * */
+	@RequestMapping(value="/getBlogsList",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getBlogsList(@RequestBody Map text){
+		Integer page = (Integer) text.get("page");
+		Integer limit = (Integer) text.get("limit");
+		String kwText = (String) text.get("kwdata");
+		EntityWrapper<Blogs> wrapper = new EntityWrapper<>();
+		if(!kwText.equals("")) {
+			wrapper.like("blog_text",kwText).or().like("blog_title",kwText);
+		}
+		Page<Map<String, Object>> mapsPage = blogSer.selectMapsPage(new Page<>(page, limit), wrapper);
+		Map<String,Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("status",0);
+		resultMap.put("message","所有博客");
+		resultMap.put("total",mapsPage.getTotal());
+		resultMap.put("data",mapsPage.getRecords());
+		return resultMap;
+		
+	}
+	
+	
+	/**
+	 * 前台的博客中心
+	 * @return 
+	 * */
+	@RequestMapping(value="/getBlogByCust",method=RequestMethod.POST)
+	@ResponseBody
+	public List<Blogs> getBlogByCust(@RequestBody Map map) {
+		String kw = (String) map.get("data");
+		EntityWrapper<Blogs> wrapper = new EntityWrapper<>();
+		if(!kw.equals("")) {
+			wrapper.like("blog_text",kw);
+		}
+		wrapper.eq("is_show","展示");
+		wrapper.orderBy("praise_int", false);
+		List<Blogs> list = blogSer.selectList(wrapper);
+		for (Blogs blogs : list) {
+			Technician techn = technSer.selectById(blogs.getTechnId());
+			blogs.setTechnName(techn.getTechnRealName());
+		}
+		return list;
+	}
+	
+	
+	/**
 	 * 前台删除
 	 * */
 	@RequestMapping(value="/delByTechn/{id}",method=RequestMethod.GET)
@@ -59,6 +118,18 @@ public class BlogsController {
 		blogs.setBlogId(id);
 		blogs.setIsShow("删除");
 		boolean b = blogSer.updateById(blogs);
+		if(b) {
+			return Msg.success().add("msg","删除成功！");
+		}
+		return Msg.fail().add("msg","删除失败！");
+	}
+	/**
+	 * 管理员删除
+	 * */
+	@RequestMapping(value="/delByAdmin/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public Msg delByAdmin(@PathVariable("id")Integer id) {
+		boolean b = blogSer.deleteById(id);
 		if(b) {
 			return Msg.success().add("msg","删除成功！");
 		}
@@ -74,12 +145,14 @@ public class BlogsController {
 	public Msg editBlog(@RequestBody Map map) {
 		String blogText = (String) map.get("text");
 		String blogId = (String) map.get("id");
+		String title = (String) map.get("title");
 		int id = Integer.parseInt(blogId);
 		String state = (String) map.get("state");
 		Blogs blogs = new Blogs();
 		blogs.setBlogId(id);
 		blogs.setBlogText(blogText);
 		blogs.setIsShow(state);
+		blogs.setBlogTitle(title);
 		boolean b = blogSer.updateById(blogs);
 		if(b) {
 			return Msg.success().add("msg","修改成功！");
@@ -110,7 +183,7 @@ public class BlogsController {
 		}
 		String blogText = (String) afterMap.get("blogText");
 		if(!blogText.equals("")) {
-			wrapper.like("blog_text", blogText);
+			wrapper.like("blog_text", blogText).or().like("blog_title",blogText);
 		}
 		wrapper.ne("is_show", "删除");
 		Page<Map<String, Object>> selectMapsPage = blogSer.selectMapsPage(new Page<>(page, limit), wrapper);
@@ -131,10 +204,12 @@ public class BlogsController {
 	public Msg writeBlog(@RequestBody Map map) {
 		String blogText = (String) map.get("text");
 		String technId = (String) map.get("id");
+		String title = (String) map.get("title");
 		int id = Integer.parseInt(technId);
 		String state = (String) map.get("state");
 		Blogs blogs = new Blogs();
 		blogs.setTechnId(id);
+		blogs.setBlogTitle(title);
 		blogs.setBlogText(blogText);
 		blogs.setIsShow(state);
 		blogs.setPraiseInt(0);
@@ -195,6 +270,11 @@ public class BlogsController {
 		model.addAttribute("techn", selectOne);
 		return "forward:/pages/blogs/list-blog.jsp";
 	}
-	
+	//后台管理所有博客页面
+	@RequestMapping(value="/toTechnBlogsListPage",method=RequestMethod.GET)
+	public String toTechnBlogsListPage() {
+		return "/blogs/list-blogs";
+		
+	}
 }
 

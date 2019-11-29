@@ -25,10 +25,6 @@
 <!--//webfonts-->
 <link href="${PATH}/static/layui/css/layui.css" rel='stylesheet'
 	type='text/css' />
-<link href="${PATH}/static/css/icheck-material.min.css" rel='stylesheet'
-	type='text/css' />
-<link href="${PATH}/static/css/icheck-material-custom.min.css" rel='stylesheet'
-	type='text/css' />
 </head>
 <style>
 .cust-info {
@@ -156,10 +152,13 @@ input[type="number"] {
 <div style="display: none;" id="detailBlogModal">
 	<fieldset class="layui-elem-field" >
 	  <legend>文章</legend>
+	  <div class="layui-field-box" id="detailBlogtitle">
+	  </div>
 	  <div class="layui-field-box" id="detailBlogDiv">
 	  </div>
 	</fieldset>
 </div>
+<!-- 修改 -->
 <div style="display: none;" id="editBlogModal">
 	<fieldset class="layui-elem-field" >
 	  <legend>文章</legend>
@@ -170,6 +169,8 @@ input[type="number"] {
 		<div class="layui-form">
 			<div class="layui-form-item">
 			    <div class="layui-input-block">
+			     	<input type="text" id="edit_blog_title" autocomplete="off" class="layui-input">
+			 
 			      <input type="radio" name="editBlogState" value="展示" title="展示">
 			      <input type="radio" name="editBlogState" value="隐藏" title="隐藏">
 			    </div>
@@ -218,6 +219,7 @@ function renderTb(){
 			},
 		    cols: [[ //表头
 		      {field: 'blogId', title: '#',hide:true,align : "center"}
+		      ,{field: 'blogTitle', style:"color: blue;",title: '标题',align : "center"} 
 		      ,{field: 'isShow', style:"color: orange;",title: '状态',align : "center"} 
 		      ,{field: 'praiseInt', title: '点赞',align : "center",sort:true} 
 		      ,{field : 'createTime',title : '写作时间',sort:true,align : "center",templet:"<div>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
@@ -240,6 +242,7 @@ function renderTb(){
 			  var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
 			  if(layEvent === 'detail'){ //查看
 				  $("#detailBlogDiv").html(data.blogText);
+				  $("#detailBlogtitle").html(data.blogTitle);
 				  var index = layer.open({
 						title : '查看博文',
 						fix : true,
@@ -275,6 +278,7 @@ function renderTb(){
 			  } else if(layEvent === 'edit'){ //编辑
 				  $("#editShowBlog").html(data.blogText);
 				  $("#editBlogId").val(data.blogId);
+				  $("#edit_blog_title").val(data.blogTitle);
 				  var index = layer.open({
 						title : '查看博文',
 						fix : true,
@@ -359,6 +363,11 @@ $("#kwGetBlogsBtn").click(function(){
 	editor.create()
 	 document.getElementById('editBlogBtn').addEventListener('click', function () {
 		 var id = $("#editBlogId").val();
+		 var title = $("#edit_blog_title").val();
+		 if(title==""){
+			 layui.layer.msg("请输入标题",{icon:5});
+			 return;
+		 }
 		 var blogState = $('input[name="editBlogState"]:checked').val();
         var blog = editor.txt.html()
         $.ajax({
@@ -366,7 +375,7 @@ $("#kwGetBlogsBtn").click(function(){
         	method:"POST",
         	contentType: "application/json",//必须指定，否则会报415错误
             dataType : 'json',
-        	data:JSON.stringify({id:id,text:blog,state:blogState}),
+        	data:JSON.stringify({id:id,text:blog,state:blogState,title:title}),
         	success:function(res){
         		if(res.code==100){
         			layui.layer.msg(res.extend.msg,{icon:6},function(){
