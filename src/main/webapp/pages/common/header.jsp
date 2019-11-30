@@ -12,7 +12,13 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mx-auto text-center">
+				<ul class="navbar-nav mx-auto text-center layui-nav">
+					<li class="layui-nav-item">
+				    <a href="${PATH}/pages/index.jsp">主页</a>
+				  </li>
+				  <li class="layui-nav-item">
+					<a href="${PATH}/pages/blogs/whisper.jsp">博客中心</a>
+				</li>
 				</ul>
 				<ul class="layui-nav">
 					<c:choose>
@@ -32,6 +38,9 @@
 										<dl class="layui-nav-child">
 											<dd>
 												<a class="dropdown-item" href="${PATH}/cust/getCustInfo/${sessionScope.id}/${sessionScope.name}">个人中心</a>
+											</dd>
+											<dd>
+												<a class="dropdown-item" href="${PATH}/orders/getMyOrders/${sessionScope.id}/${sessionScope.name}">我的订单</a>
 											</dd>
 											<dd>
 												<a class="dropdown-item" href="${PATH}/cust/loginOut">退出登录</a>

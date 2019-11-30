@@ -16,13 +16,14 @@
         <result column="desc_four" property="descFour" />
         <result column="desc_five" property="descFive" />
         <result column="item_state" property="itemState" />
+        <result column="item_sort" property="itemSort" />
         <result column="create_time" property="createTime" />
         <result column="is_del" property="isDel" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        item_id, item_name, item_price, desc_one, desc_two, desc_three, desc_four, desc_five, item_state, create_time, is_del
+        item_id, item_name, item_price, desc_one, desc_two, desc_three, desc_four, desc_five, item_state,item_sort, create_time, is_del
     </sql>
 
 </mapper>

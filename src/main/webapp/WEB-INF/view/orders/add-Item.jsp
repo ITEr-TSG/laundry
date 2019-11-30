@@ -85,7 +85,7 @@ input[type="number"] {
 						<div class="card-header">
 							<h4>添加条目</h4>
 						</div>
-						<div class="card" style="height: 400px">
+						<div class="card" style="height: 450px">
 							<form class="layui-form">
 								<div class="col-lg-6">
 									<div class="layui-form-item">
@@ -114,7 +114,20 @@ input[type="number"] {
 									      </select>
 									    </div>
 									  </div>
-									  <div class="layui-form-item">
+									<div class="layui-form-item">
+									    <label class="layui-form-label">分类</label>
+									    <div class="layui-input-block">
+									      <select name="itemSort" lay-verify="required">
+									        <option value="0">---请选择---</option>
+									        <option value="单次">单次</option>
+									        <option value="包月">包月</option>
+									      </select>
+									    </div>
+									  </div>
+									  
+								</div>
+								<div class="col-lg-6 ">
+									<div class="layui-form-item">
 										<label class="layui-form-label">描述1</label>
 										<div class="layui-input-block">
 											<input type="text" name="desc1" required
@@ -122,9 +135,6 @@ input[type="number"] {
 												autocomplete="off" class="layui-input">
 										</div>
 									</div>
-								</div>
-								<div class="col-lg-6 ">
-									
 									<div class="layui-form-item">
 										<label class="layui-form-label">描述2</label>
 										<div class="layui-input-block">

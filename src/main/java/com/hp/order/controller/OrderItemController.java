@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.hp.cust.beans.Cust;
+import com.hp.order.beans.Order;
 import com.hp.order.beans.OrderItem;
 import com.hp.order.service.OrderItemService;
 import com.hp.utils.AnalysisKeyWordsListUtils;
@@ -39,6 +40,98 @@ public class OrderItemController {
 
 	@Autowired
 	private OrderItemService orderItemSer;
+	
+
+	
+	
+	/**
+	 * 后台得到条目（普通）
+	 * */
+	@RequestMapping(value="/getItems",method=RequestMethod.GET)
+	@ResponseBody
+	public List<OrderItem> getItems(){
+		EntityWrapper<OrderItem> wrapper = new EntityWrapper<>();
+		wrapper.eq("item_sort", "单次");
+		List<OrderItem> list = orderItemSer.selectList(wrapper);
+		return list;
+	}
+	/**
+	 * 后台得到条目（包月）
+	 * */
+	@RequestMapping(value="/getMonthItems",method=RequestMethod.GET)
+	@ResponseBody
+	public List<OrderItem> getMonthItems(){
+		EntityWrapper<OrderItem> wrapper = new EntityWrapper<>();
+		wrapper.eq("item_sort", "包月");
+		List<OrderItem> list = orderItemSer.selectList(wrapper);
+		return list;
+	}
+	/**
+	 * 前台得到条目
+	 * */
+	@RequestMapping(value="/getItemsByShow",method=RequestMethod.GET)
+	@ResponseBody
+	public List<OrderItem> getItemsByShow(){
+		EntityWrapper<OrderItem> wrapper = new EntityWrapper<>();
+		wrapper.eq("item_state", "展示");
+		List<OrderItem> list = orderItemSer.selectList(wrapper);
+		return list;
+	}
+	
+	/**
+	 * 更改
+	 * */
+	@RequestMapping(value="/editItem",method=RequestMethod.POST)
+	@ResponseBody
+	public Msg editItem(@RequestBody Map map) {
+		String itemName = (String) map.get("itemName");
+		String itemState = (String) map.get("itemState");
+		String id = (String) map.get("itemId");
+		Integer itemId = Integer.parseInt(id);
+		String itemSort = (String) map.get("itemSort");
+		if(itemState.equals("0")||itemSort.equals("0")) {
+			return Msg.fail().add("msg","分类或状态没有选择！");
+		}
+		String desc1 = (String) map.get("desc1");
+		String desc2 = (String) map.get("desc2");
+		String desc3 = (String) map.get("desc3");
+		String desc4 = (String) map.get("desc4");
+		String desc5 = (String) map.get("desc5");
+		String price = (String) map.get("itemPrice");
+		Integer itemPrice = Integer.parseInt(price);
+		if(itemPrice<0) {
+			return Msg.fail().add("msg","倒贴？兄弟你？不是吧？");
+		}
+		OrderItem item = new OrderItem();
+		item.setItemId(itemId);
+		item.setItemName(itemName);
+		item.setItemPrice(itemPrice);
+		item.setItemState(itemState);
+		item.setItemSort(itemSort);
+		item.setDescOne(desc1);
+		item.setDescTwo(desc2);
+		item.setDescThree(desc3);
+		item.setDescFour(desc4);
+		item.setDescFive(desc5);
+		boolean b = orderItemSer.updateById(item);
+		if(b) {
+			return Msg.success().add("msg","修改成功");
+		}
+		return Msg.fail().add("msg","修改失败！");
+	}
+	
+	/**
+	 * 批量删除
+	 * */
+	@RequestMapping(value="/delItemsByIds",method=RequestMethod.POST)
+	@ResponseBody
+	public Msg delCustByIds(@RequestBody ArrayList<Integer> list) {
+		boolean b = orderItemSer.deleteBatchIds(list);
+		if(!b) {
+			return Msg.fail().add("msg","删除失败！");
+		}
+		return Msg.success().add("msg", "删除成功");
+	}
 	
 	/**
 	 * 修改状态
@@ -78,9 +171,14 @@ public class OrderItemController {
 			.or().like("desc_five",kwText);
 		}
 		String itemState = (String) afterMap.get("itemState");
+		String itemSort = (String) afterMap.get("itemSort");
 		if(!itemState.equals("0")) {
 			wrapper.eq("item_state",itemState);
 		}
+		if(!itemSort.equals("0")) {
+			wrapper.eq("item_sort",itemSort);
+		}
+		
 		String min_integral = (String) afterMap.get("min_integral");
 		String max_integral = (String) afterMap.get("max_integral");
 		if(!min_integral.equals("")&&!max_integral.equals("")) {
@@ -112,6 +210,10 @@ public class OrderItemController {
 	public Msg addOrderItem(@RequestBody Map map) {
 		String itemName = (String) map.get("itemName");
 		String itemState = (String) map.get("itemState");
+		String itemSort = (String) map.get("itemSort");
+		if(itemState.equals("0")||itemSort.equals("0")) {
+			return Msg.fail().add("msg","分类或状态没有选择！");
+		}
 		String desc1 = (String) map.get("desc1");
 		String desc2 = (String) map.get("desc2");
 		String desc3 = (String) map.get("desc3");
@@ -126,6 +228,7 @@ public class OrderItemController {
 		item.setItemName(itemName);
 		item.setItemPrice(itemPrice);
 		item.setItemState(itemState);
+		item.setItemSort(itemSort);
 		item.setDescOne(desc1);
 		item.setDescTwo(desc2);
 		item.setDescThree(desc3);

@@ -10,7 +10,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <title>博客列表</title>
-  <link rel="stylesheet" type="text/css" href="${PATH}/static/layui/css/layui.css">
+ 
   <link rel="stylesheet" type="text/css" href="${PATH}/pages/css/main.css">
   <!-- Bootstrap Core CSS -->
 	<link href="${PATH}/pages/css/bootstrap.css" rel='stylesheet' type='text/css' />
@@ -18,6 +18,7 @@
 	<link rel="stylesheet" href="${PATH}/pages/css/swipebox.css">
 	<!-- Custom CSS -->
 	<link href="${PATH}/pages/css/style.css" rel='stylesheet' type='text/css' />
+	 <link rel="stylesheet" type="text/css" href="${PATH}/static/layui/css/layui.css">
 <!--加载meta IE兼容文件-->
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>

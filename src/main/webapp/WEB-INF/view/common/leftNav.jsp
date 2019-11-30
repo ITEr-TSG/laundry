@@ -33,7 +33,8 @@
                         <ul>
                             <li><a href="${PATH}/orderItem/toAddOrderItemPage">添加条目</a></li>
                             <li><a href="${PATH}/orderItem/toOrderItemListPage">订单条目</a></li>
-                            <li><a href="${PATH}/newFood/toNewFoodListPage">订单中心</a></li>
+                            <li><a href="${PATH}/orders/toGeneralOrdersListPage">普通订单</a></li>
+                            <li><a href="${PATH}/orders/toMonthOrdersListPage">包月订单</a></li>
                         </ul>
                     </li>
                     <li>

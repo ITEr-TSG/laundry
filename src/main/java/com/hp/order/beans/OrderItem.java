@@ -58,6 +58,10 @@ public class OrderItem extends Model<OrderItem> {
      */
     private String itemState;
     /**
+     * 条目类型（包月或者单次）
+     */
+    private String itemSort;
+    /**
      * 条目上架的时间
      */
     @TableField(fill = FieldFill.INSERT)
@@ -163,12 +167,20 @@ public class OrderItem extends Model<OrderItem> {
         return this.itemId;
     }
 
+	public String getItemSort() {
+		return itemSort;
+	}
+
+	public void setItemSort(String itemSort) {
+		this.itemSort = itemSort;
+	}
+
 	@Override
 	public String toString() {
 		return "OrderItem [itemId=" + itemId + ", itemName=" + itemName + ", itemPrice=" + itemPrice + ", descOne="
 				+ descOne + ", descTwo=" + descTwo + ", descThree=" + descThree + ", descFour=" + descFour
-				+ ", descFive=" + descFive + ", itemState=" + itemState + ", createTime=" + createTime + ", isDel="
-				+ isDel + "]";
+				+ ", descFive=" + descFive + ", itemState=" + itemState + ", itemSort=" + itemSort + ", createTime="
+				+ createTime + ", isDel=" + isDel + "]";
 	}
 
   

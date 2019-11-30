@@ -50,6 +50,7 @@ public class BlogsController {
 	@Autowired
 	private TechnicianService technSer;	//技师
 	
+	
 	/**
 	 * 后台根据id查询博客
 	 * */

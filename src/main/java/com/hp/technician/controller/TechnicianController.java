@@ -61,6 +61,21 @@ public class TechnicianController {
 	@Autowired
 	private TechnMidSortService midSer;			//中间表
 	
+	
+	/**
+	 * 下单选择技师
+	 * @return 
+	 * */
+	@RequestMapping(value="/selectTechn",method=RequestMethod.GET)
+	@ResponseBody
+	public List<Technician> selectTechn() {
+		EntityWrapper<Technician> wrapper = new EntityWrapper<>();
+		wrapper.orderBy("techn_integral", false);
+		wrapper.eq("techn_state", "已通过");
+		List<Technician> list = technSer.selectList(wrapper);
+		return list;
+	}
+	
 	/**
 	 * 前台页面展示
 	 * @return 
@@ -70,6 +85,7 @@ public class TechnicianController {
 	public List<Map<String, Object>> getTechnByShow() {
 		EntityWrapper<Technician> wrapper = new EntityWrapper<>();
 		wrapper.orderBy("techn_integral", false);
+		wrapper.eq("techn_state", "已通过");
 		Page<Map<String, Object>> page = technSer.selectMapsPage(new Page<>(1, 4), wrapper);
 		return page.getRecords();
 	}
@@ -96,6 +112,7 @@ public class TechnicianController {
 			wrapper.in("technician_id", technIdList);
 		}
 		wrapper.orderBy("techn_integral", false);
+		wrapper.eq("techn_state", "已通过");
 		List<Technician> list = technSer.selectList(wrapper);
 		return list;
 	}

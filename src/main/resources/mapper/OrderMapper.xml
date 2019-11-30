@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hp.order.mapper.OrderMapper">
+
+    <!-- 开启二级缓存 -->
+    <!-- <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/> -->
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hp.order.beans.Order">
+        <id column="order_id" property="orderId" />
+        <result column="order_number" property="orderNumber" />
+        <result column="cust_id" property="custId" />
+        <result column="cust_name" property="custName" />
+        <result column="techn_id" property="technId" />
+        <result column="techn_name" property="technName" />
+        <result column="shopper" property="shopper" />
+        <result column="address" property="address" />
+        <result column="email" property="email" />
+        <result column="state" property="state" />
+        <result column="item_id" property="itemId" />
+        <result column="item_name" property="itemName" />
+        <result column="item_sort" property="itemSort" />
+        <result column="price" property="price" />
+        <result column="appoint_time" property="appointTime" />
+        <result column="create_time" property="createTime" />
+        <result column="over_time" property="overTime" />
+        <result column="evaluate" property="evaluate" />
+        <result column="is_del" property="isDel" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        order_id, order_number, cust_id, cust_name, techn_id, techn_name, shopper, address, email, state, item_id, item_name,item_sort, price, appoint_time, create_time, over_time, evaluate, is_del
+    </sql>
+
+</mapper>

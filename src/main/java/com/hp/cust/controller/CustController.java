@@ -23,12 +23,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.hp.blogs.service.BlogsService;
 import com.hp.code.beans.RegiterCode;
 import com.hp.code.service.RegiterCodeService;
 import com.hp.cust.beans.Cust;
 import com.hp.cust.service.CustService;
 import com.hp.integral.beans.RechargeCust;
 import com.hp.integral.service.RechargeCustService;
+import com.hp.order.service.OrderService;
+import com.hp.technician.service.TechnicianService;
 import com.hp.utils.AnalysisKeyWordsListUtils;
 import com.hp.utils.Msg;
 
@@ -51,7 +54,36 @@ public class CustController {
 	private CustService custSer;		//客户
 	
 	@Autowired
-	private RechargeCustService rechargeSer;
+	private RechargeCustService rechargeSer;	//充值
+	
+	@Autowired
+	private TechnicianService technSer;		//技师
+	
+	@Autowired
+	private OrderService orderSer;			//订单
+	
+	@Autowired
+	private BlogsService blogSer;			//博客
+	
+	
+	/**
+	 * 查询客户数量
+	 * */
+	@RequestMapping(value="/getCountsByShow",method=RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Integer> getCustsByShow() {
+		int technsCount = technSer.selectCount(null);
+		int custsCount = custSer.selectCount(null);
+		int blogsCount = blogSer.selectCount(null);
+		int ordersCount = orderSer.selectCount(null);
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("technsCount", technsCount);
+		map.put("custsCount", custsCount);
+		map.put("blogsCount", blogsCount);
+		map.put("ordersCount", ordersCount);
+		return map;
+	}
+	
 	
 	/**
 	 * 根据id查询客户

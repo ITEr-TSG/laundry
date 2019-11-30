@@ -94,6 +94,9 @@
 												<a class="dropdown-item" href="${PATH}/cust/getCustInfo/${sessionScope.id}/${sessionScope.name}">个人中心</a>
 											</dd>
 											<dd>
+												<a class="dropdown-item" href="${PATH}/orders/getMyOrders/${sessionScope.id}/${sessionScope.name}">我的订单</a>
+											</dd>
+											<dd>
 												<a class="dropdown-item" href="${PATH}/cust/loginOut">退出登录</a>
 											</dd>
 										</dl>
@@ -217,28 +220,28 @@
 				<div class="col-lg-3 col-md-6">
 					<div class="counter pt-5 px-3 pb-3">
 						<i class="far fa-smile fa-2x"></i>
-						<div class="timer count-title count-number mt-2" data-to="5100" data-speed="1500"></div>
+						<div class="timer count-title  mt-2">{{counts.custsCount}}</div>
 						<p class="count-text text-capitalize">服务的客户</p>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6 mt-md-0 mt-sm-5 mt-3">
 					<div class="counter  pt-5 px-3 pb-3">
 						<i class=" fab fa-stack-overflow fa-2x"></i>
-						<div class="timer count-title count-number mt-2" data-to="4783" data-speed="1500"></div>
+						<div class="timer count-title  mt-2" v-text="counts.ordersCount"></div>
 						<p class="count-text text-capitalize">完成的订单</p>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6 mt-lg-0 mt-sm-5 mt-3">
 					<div class="counter  pt-5 px-3 pb-3">
 						<i class="fas fa-eraser fa-2x"></i>
-						<div class="timer count-title count-number mt-2" data-to="2184" data-speed="1500"></div>
+						<div class="timer count-title mt-2" v-text="counts.technsCount" ></div>
 						<p class="count-text text-capitalize">技师团队</p>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6 mt-lg-0  mt-sm-5 mt-3">
 					<div class="counter  pt-5 px-3 pb-3">
 						<i class="fas fa-exclamation fa-2x"></i>
-						<div class="timer count-title count-number mt-2" data-to="1084" data-speed="1084"></div>
+						<div class="timer count-title  mt-2" v-text="counts.blogsCount" ></div>
 						<p class="count-text text-capitalize">博文数量</p>
 					</div>
 				</div>
@@ -359,94 +362,28 @@
 		<div class="container py-md-5 py-3">
 			<h3 class="w3ls-title text-center text-capitalize pb-md-5 pb-4">服务选择</h3>
 			<div class="row pb-5">
-				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-				  <legend>信息流 - 滚动加载</legend>
-				</fieldset>	
-				<div class="col-lg-3 col-md-6 text-center  pb-0 pt-3 px-3 agile-pricegrid">
+			
+				<div class="col-lg-3 col-md-6 text-center  pb-0 pt-3 px-3 agile-pricegrid" v-for="item in items">
 					<div class="bg-price py-sm-3 rounded-top text-center">
-						<h4>普通洗衣</h4>
+						<h4 v-text = 'item.itemName'>普通洗衣</h4>
 						<span class="mx-auto my-2"></span>
 					</div>
 					<div class="p-3">
 						<h5 class="pt-2">
-							<sup>$</sup>39</h5>
-						<span>per month</span>
+							<sup>积分</sup> {{item.itemPrice}} </h5>
+						<span style="color:orange" v-text = 'item.itemSort'></span>
 					</div>
 					<ul class="list-group-flush">
-						<li class="list-group-item">Cras justo odio</li>
-						<li class="list-group-item">Dapibus ac facilisis in</li>
-						<li class="list-group-item">Morbi leo risus</li>
-						<li class="list-group-item">Cras justo odio</li>
-						<li class="list-group-item">Porta ac consectetur ac</li>
+						<li class="list-group-item" v-text = 'item.descOne'></li>
+						<li class="list-group-item" v-text = 'item.descTwo'></li>
+						<li class="list-group-item" v-text = 'item.descThree'></li>
+						<li class="list-group-item" v-text = 'item.descFour'></li>
+						<li class="list-group-item" v-text = 'item.descFive'></li>
 					</ul>
 					<div class="py-3 px-2">
-						<button type="button" class="btn btn-info btn-lg btn-block text-md-center" data-toggle="modal" aria-pressed="false" data-target="#exampleModal">Get Started</button>
+						<a type="button" class="btn btn-info btn-lg btn-block text-md-center" :href="'${PATH}/orders/toAddOrderPage/'+item.itemId">下单</a>
 					</div>
 				</div>
-				<div class="col-lg-3 col-md-6 text-center pb-0 pt-3 px-3 agile-pricegrid">
-					<div class="bg-price py-sm-3 rounded-top text-center">
-						<h4>Regular</h4>
-						<span class="mx-auto my-2"></span>
-					</div>
-					<div class="p-3">
-						<h5 class="pt-2">
-							<sup>$</sup>69</h5>
-						<span>per month</span>
-					</div>
-					<ul class="list-group-flush">
-						<li class="list-group-item">Cras justo odio</li>
-						<li class="list-group-item">Dapibus ac facilisis in</li>
-						<li class="list-group-item">Morbi leo risus</li>
-						<li class="list-group-item">Cras justo odio</li>
-						<li class="list-group-item">Porta ac consectetur ac</li>
-					</ul>
-					<div class="py-3 px-2">
-						<button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" aria-pressed="false" data-target="#exampleModal">Get Started</button>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6 text-center p-3  agile-pricegrid">
-					<div class="bg-price py-sm-3 rounded-top text-center">
-						<h4>Mega</h4>
-						<span class="mx-auto my-2"></span>
-					</div>
-					<div class="p-3">
-						<h5 class="pt-2">
-							<sup>$</sup>99</h5>
-						<span>per month</span>
-					</div>
-					<ul class="list-group-flush">
-						<li class="list-group-item">Cras justo odio</li>
-						<li class="list-group-item">Dapibus ac facilisis in</li>
-						<li class="list-group-item">Morbi leo risus</li>
-						<li class="list-group-item">Cras justo odio</li>
-						<li class="list-group-item">Porta ac consectetur ac</li>
-					</ul>
-					<div class="py-3 px-2">
-						<button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" aria-pressed="false" data-target="#exampleModal">Get Started</button>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6 text-center pb-0 pt-3 px-3 agile-pricegrid">
-					<div class="bg-price py-sm-3 rounded-top text-center">
-						<h4>Combo</h4>
-						<span class="mx-auto my-2"></span>
-					</div>
-					<div class="p-3">
-						<h5 class="pt-2">
-							<sup>$</sup>199</h5>
-						<span>per month</span>
-					</div>
-					<ul class="list-group-flush">
-						<li class="list-group-item">Cras justo odio</li>
-						<li class="list-group-item">Dapibus ac facilisis in</li>
-						<li class="list-group-item">Morbi leo risus</li>
-						<li class="list-group-item">Cras justo odio</li>
-						<li class="list-group-item">Porta ac consectetur ac</li>
-					</ul>
-					<div class="py-3 px-2">
-						<button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" aria-pressed="false" data-target="#exampleModal">Get Started</button>
-					</div>
-				</div>
-				
 				
 			</div>
 		</div>
@@ -611,73 +548,6 @@
 		</div>
 	</footer>
 	<!-- //footer -->
-	<!-- order modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title text-capitalize" id="exampleModalLabel1">order your laundry</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form action="#" method="post" class="p-3">
-						<div class="form-group">
-							<label for="recipient-name" class="col-form-label">Your Name</label>
-							<input type="text" class="form-control" placeholder=" " name="Name" id="recipient-name" required="">
-						</div>
-						<div class="form-group">
-							<label for="recipient-name1" class="col-form-label">Your Email</label>
-							<input type="email" class="form-control" placeholder=" " name="Name" id="recipient-name1" required="">
-						</div>
-						<div class="form-group">
-							<label for="recipient-name2" class="col-form-label">Phone</label>
-							<input type="text" class="form-control" placeholder=" " name="Name" id="recipient-name2" required="">
-						</div>
-						<div class="form-group">
-							<label class="mr-2 col-form-label">Pick Up</label>
-							<input id="datepicker1" name="check in" type="text" value="mm/dd/yyyy" class="form-control" required="">
-						</div>
-						<div class="form-group">
-							<label class="mr-2 col-form-label">Delivery </label>
-							<input id="datepicker2" name="check out" type="text" value="mm/dd/yyyy" class="form-control" required="">
-						</div>
-						<div class="form-check">
-							<label class="form-check-label col-form-label" for="l1">
-								<input type="checkbox" class="form-check-input" value="" id="l1">Wash& Fold
-							</label>
-						</div>
-						<div class="form-check">
-							<label class="form-check-label col-form-label" for="l2">
-								<input type="checkbox" class="form-check-input" value="" id="l2">Handwash
-							</label>
-						</div>
-						<div class="form-check">
-							<label class="form-check-label col-form-label" id="l3">
-								<input type="checkbox" class="form-check-input" value="" id="13">Dry Clean
-							</label>
-						</div>
-						<div class="form-check">
-							<label class="form-check-label col-form-label" for="l4">
-								<input type="checkbox" class="form-check-input" value="" id="l4">Carpets
-							</label>
-						</div>
-						<div class="form-group">
-							<label for="comment" class="col-form-label">Pickup Address:</label>
-							<textarea class="form-control" rows="5" id="comment"></textarea>
-						</div>
-
-						<div class="right-w3l">
-							<input type="submit" class="form-control" value="pick my laundry">
-						</div>
-					</form>
-
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- //order modal -->
 	<!-- js-->
 	<script src="${PATH}/pages/js/jquery-2.2.3.min.js"></script>
 	<!-- js-->
@@ -798,15 +668,37 @@
 		el:"#showDiv",
 		data:{
 			techns:[],
+			items:[],
+			counts:[]
 		},created: function () {
+			//展示数量
+			this.$http.get("${PATH}/cust/getCountsByShow").then(function(response){
+				//成功
+				this.counts=response.body;
+				console.log(this.counts);
+			},function(response) {
+				//错误
+				console.log("系统错误！")
+			});
+			//展示技师
 			this.$http.get("${PATH}/technician/getTechnByShow").then(function(response){
-				console.log(response.body)
 				//成功
 				this.techns=response.body;
 			},function(response) {
 				//错误
-				console.log("查询反馈分类时，出现系统错误！")
+				console.log("系统错误！")
 			});
+			//展示订单条目
+			this.$http.get("${PATH}/orderItem/getItemsByShow").then(function(response){
+				//成功
+				this.items=response.body;
+			},function(response) {
+				//错误
+				console.log("系统错误！")
+			});
+			
+		},updated:function(){
+			
 		}
 	});
 </script>

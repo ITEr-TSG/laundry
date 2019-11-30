@@ -18,8 +18,82 @@ public class EmailUntils {
     //发件人昵称
     private static final String senderNick = "匠心衣橱";
     //主题
-    private static final String emailSubject = "来自“匠心衣橱”干洗店的验证码";
+    private static final String emailSubject = "来自“匠心衣橱”干洗店的通知";
     
+    /**
+     * 包月到期
+     * 
+     * */
+    public boolean expireOrder(String receive ,String orderNumber) {
+    	try {
+            HtmlEmail email = new HtmlEmail();
+            // 配置信息
+            email.setHostName(hostName);
+            email.setFrom(senderEmail,senderNick);
+            email.setAuthentication(senderEmail,userInfo);
+            email.setCharset(chartset);
+            email.setSubject(emailSubject);
+            String sendHtml = "尊敬的客户您好！<hr>您在匠心衣橱的包月已到期，感谢您的支持！订单号为：<span style='color:orange;'>"+orderNumber+"</span>";
+            email.setHtmlMsg(sendHtml);
+            // 收件人
+            if (null != receive) {
+               email.addTo(receive);
+            }
+            //发送
+            try {
+				email.send();
+				return true;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+            
+        } catch (EmailException e) {
+            e.printStackTrace();
+            return false;
+        } 
+    }
+    /**
+     * 客户下单消费
+     * 消费多少
+     * 消费方式
+     * 消费时间
+     * 余额多少
+     * */
+    public boolean addOrder(String receive, String way,Integer price,Integer balance) {
+    	Date date = new Date();
+    	SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    	String time = dateFormat.format(date);
+    	try {
+    		HtmlEmail email = new HtmlEmail();
+    		// 配置信息
+    		email.setHostName(hostName);
+    		email.setFrom(senderEmail,senderNick);
+    		email.setAuthentication(senderEmail,userInfo);
+    		email.setCharset(chartset);
+    		email.setSubject(emailSubject);
+    		String sendHtml = "尊敬的客户您好！<hr>您的账户在  "+time+" 通过 <span style='color:blue;'>"+way+"</span> 的方式，消费了 <span style='color:red;'>"+price+"</span> 积分，当前余额为：<span style='color:orange;'>"+balance+"</span>";
+    		email.setHtmlMsg(sendHtml);
+    		// 收件人
+    		if (null != receive) {
+    			email.addTo(receive);
+    		}
+    		//发送
+    		try {
+    			email.send();
+    			return true;
+    		} catch (Exception e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    			return false;
+    		}
+    		
+    	} catch (EmailException e) {
+    		e.printStackTrace();
+    		return false;
+    	} 
+    }
     /**
      * 邮件发送工具类(单个)
      * 
@@ -55,7 +129,7 @@ public class EmailUntils {
         } 
     }
     /**
-             * 反驳和同意通用的邮件
+     * 反驳和同意通用的邮件
      * */
     public boolean sendEmailsCurrency(String receive ,String isSuccess,Map map) {
     	Long object = (Long) map.get("createTime");
